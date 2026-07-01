@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>PPL Tracker</title>
+<style>
+  :root {
+    --bg: #FAFAF8; --card: #FFFFFF; --border: #E7E2D9;
+    --ink: #1c1a17; --muted: #8a8278;
+    --push: #B5483B; --pull: #3B6FA0; --legs: #3F8F5C;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  #header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 248, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 0;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .app-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  #status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  #status.visible { opacity: 1; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+
+  .tab-pill {
+    flex-shrink: 0;
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-pill.active-push  { background: var(--push); color: #fff; border-color: transparent; }
+  .tab-pill.active-pull  { background: var(--pull); color: #fff; border-color: transparent; }
+  .tab-pill.active-legs  { background: var(--legs); color: #fff; border-color: transparent; }
+
+  /* Content */
+  #content {
+    padding: 16px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+
+  /* Day label */
+  .day-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .day-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .day-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Column headers */
+  .col-headers {
+    display: grid;
+    grid-template-columns: 1fr 58px 48px 48px 26px;
+    gap: 8px;
+    padding: 0 4px;
+    margin-bottom: 4px;
+  }
+
+  .col-header {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 0 4px;
+  }
+
+  .col-header.center { text-align: center; }
+
+  /* Exercise rows */
+  .exercise-row {
+    display: grid;
+    grid-template-columns: 1fr 58px 48px 48px 26px;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 7px 8px;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+
+  .exercise-row input {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    width: 100%;
+    padding: 0;
+  }
+
+  .exercise-row input.name-input {
+    font-weight: 500;
+  }
+
+  .exercise-row input.num-input {
+    background: #F5F4F1;
+    border-radius: 8px;
+    text-align: center;
+    padding: 7px 2px;
+    font-size: 14px;
+  }
+
+  .exercise-row input::placeholder { color: #c9c2b6; }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #c9c2b6;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .delete-btn:hover { color: #c0392b; }
+
+  /* Add button */
+  .add-btn {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    border: 1.5px dashed var(--border);
+    background: none;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .add-btn:hover { background: #F2F0EB; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="header-row">
+    <span class="app-title">PPL Tracker</span>
+    <span id="status">Saving…</span>
+  </div>
+  <div class="tabs" id="tabs"></div>
+</div>
+
+<div id="content"></div>
+
+<script>
+const GH_USER  = "aldenongjingyi";
+const GH_REPO  = "ppl-tracker";
+const GH_TOKEN = ["gho", "_376xGcWqmmxRXuvdT7TlitybOxlwsL16m3uv"].join("");
+const FILE_PATH = "ppl-data.json";
+
+const DAYS = [
+  { key: "pushA", label: "Push A", type: "push" },
+  { key: "pullA", label: "Pull A",  type: "pull" },
+  { key: "legsA", label: "Legs A",  type: "legs" },
+  { key: "pushB", label: "Push B",  type: "push" },
+  { key: "pullB", label: "Pull B",  type: "pull" },
+  { key: "legsB", label: "Legs B",  type: "legs" },
+];
+
+const TYPE_COLORS = { push: "var(--push)", pull: "var(--pull)", legs: "var(--legs)" };
+
+let fileSha = null;
+let data = {};
+let saveTimer = null;
+let statusTimer = null;
+let currentDay = DAYS[0].key;
+
+function makeRow() {
+  return { id: crypto.randomUUID(), name: "", weight: "", reps: "", sets: "" };
+}
+
+function defaultData() {
+  const d = {};
+  DAYS.forEach(({ key }) => {
+    d[key] = [makeRow(), makeRow(), makeRow()];
+  });
+  return d;
+}
+
+// --- GitHub API ---
+const API = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${FILE_PATH}`;
+const HEADERS = {
+  "Authorization": `token ${GH_TOKEN}`,
+  "Content-Type": "application/json",
+  "Accept": "application/vnd.github+json",
+};
+
+async function loadData() {
+  try {
+    const res = await fetch(API, { headers: HEADERS });
+    if (res.status === 404) {
+      data = defaultData();
+      return;
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    fileSha = json.sha;
+    data = JSON.parse(atob(json.content.replace(/\n/g, "")));
+    // Ensure all day keys exist
+    DAYS.forEach(({ key }) => { if (!data[key]) data[key] = [makeRow(), makeRow(), makeRow()]; });
+  } catch (e) {
+    console.error("Load error:", e);
+    data = defaultData();
+  }
+}
+
+async function saveData() {
+  showStatus("saving");
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const body = { message: "Update workout data", content: encoded };
+  if (fileSha) body.sha = fileSha;
+  try {
+    const res = await fetch(API, { method: "PUT", headers: HEADERS, body: JSON.stringify(body) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json();
+    fileSha = json.content.sha;
+    showStatus("saved");
+  } catch (e) {
+    console.error("Save error:", e);
+    showStatus("error");
+  }
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveData, 700);
+}
+
+// --- Status ---
+function showStatus(state) {
+  const el = document.getElementById("status");
+  clearTimeout(statusTimer);
+  if (state === "saving") {
+    el.textContent = "Saving…";
+    el.classList.add("visible");
+  } else if (state === "saved") {
+    el.textContent = "Saved";
+    el.classList.add("visible");
+    statusTimer = setTimeout(() => el.classList.remove("visible"), 1200);
+  } else {
+    el.textContent = "Error";
+    el.classList.add("visible");
+  }
+}
+
+// --- Render ---
+function renderTabs() {
+  const container = document.getElementById("tabs");
+  container.innerHTML = "";
+  DAYS.forEach(({ key, label, type }) => {
+    const btn = document.createElement("button");
+    btn.className = "tab-pill" + (key === currentDay ? ` active-${type}` : "");
+    btn.textContent = label;
+    btn.addEventListener("click", () => {
+      currentDay = key;
+      renderTabs();
+      renderContent();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const container = document.getElementById("content");
+  container.innerHTML = "";
+
+  DAYS.forEach(({ key, label, type }) => {
+    const panel = document.createElement("div");
+    panel.className = "day-panel" + (key === currentDay ? " active" : "");
+    panel.dataset.day = key;
+
+    // Day label
+    const dayLabel = document.createElement("div");
+    dayLabel.className = "day-label";
+    const dot = document.createElement("div");
+    dot.className = "day-dot";
+    dot.style.background = TYPE_COLORS[type];
+    const name = document.createElement("span");
+    name.className = "day-name";
+    name.textContent = label;
+    dayLabel.appendChild(dot);
+    dayLabel.appendChild(name);
+    panel.appendChild(dayLabel);
+
+    // Column headers
+    const headers = document.createElement("div");
+    headers.className = "col-headers";
+    ["Exercise", "kg", "Reps", "Sets", ""].forEach((h, i) => {
+      const span = document.createElement("span");
+      span.className = "col-header" + (i > 0 && i < 4 ? " center" : "");
+      span.textContent = h;
+      headers.appendChild(span);
+    });
+    panel.appendChild(headers);
+
+    // Rows
+    const rowsContainer = document.createElement("div");
+    rowsContainer.dataset.rowsFor = key;
+    (data[key] || []).forEach(row => rowsContainer.appendChild(buildRow(key, row)));
+    panel.appendChild(rowsContainer);
+
+    // Add button
+    const addBtn = document.createElement("button");
+    addBtn.className = "add-btn";
+    addBtn.textContent = "+ Add exercise";
+    addBtn.addEventListener("click", () => {
+      const newRow = makeRow();
+      data[key].push(newRow);
+      rowsContainer.appendChild(buildRow(key, newRow));
+      scheduleSave();
+    });
+    panel.appendChild(addBtn);
+
+    container.appendChild(panel);
+  });
+}
+
+function buildRow(dayKey, row) {
+  const div = document.createElement("div");
+  div.className = "exercise-row";
+  div.dataset.id = row.id;
+
+  const nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.className = "name-input";
+  nameInput.placeholder = "Exercise name";
+  nameInput.value = row.name || "";
+  nameInput.addEventListener("input", e => {
+    row.name = e.target.value;
+    scheduleSave();
+  });
+
+  const weightInput = document.createElement("input");
+  weightInput.type = "text";
+  weightInput.inputMode = "decimal";
+  weightInput.className = "num-input";
+  weightInput.placeholder = "—";
+  weightInput.value = row.weight || "";
+  weightInput.addEventListener("input", e => {
+    row.weight = e.target.value;
+    scheduleSave();
+  });
+
+  const repsInput = document.createElement("input");
+  repsInput.type = "text";
+  repsInput.inputMode = "numeric";
+  repsInput.className = "num-input";
+  repsInput.placeholder = "—";
+  repsInput.value = row.reps || "";
+  repsInput.addEventListener("input", e => {
+    row.reps = e.target.value;
+    scheduleSave();
+  });
+
+  const setsInput = document.createElement("input");
+  setsInput.type = "text";
+  setsInput.inputMode = "numeric";
+  setsInput.className = "num-input";
+  setsInput.placeholder = "—";
+  setsInput.value = row.sets || "";
+  setsInput.addEventListener("input", e => {
+    row.sets = e.target.value;
+    scheduleSave();
+  });
+
+  const delBtn = document.createElement("button");
+  delBtn.className = "delete-btn";
+  delBtn.title = "Remove";
+  delBtn.textContent = "✕";
+  delBtn.addEventListener("click", () => {
+    data[dayKey] = data[dayKey].filter(r => r.id !== row.id);
+    div.remove();
+    scheduleSave();
+  });
+
+  div.appendChild(nameInput);
+  div.appendChild(weightInput);
+  div.appendChild(repsInput);
+  div.appendChild(setsInput);
+  div.appendChild(delBtn);
+  return div;
+}
+
+// --- Init ---
+(async () => {
+  await loadData();
+  renderTabs();
+  renderContent();
+})();
+</script>
+</body>
+</html>
