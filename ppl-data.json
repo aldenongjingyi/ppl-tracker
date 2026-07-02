@@ -84,6 +84,17 @@
                   "reps": "12"
                 }
               ]
+            },
+            {
+              "id": "f61158b9-e7b0-4d44-94a4-bc71ba6e7f6c",
+              "name": "",
+              "sets": [
+                {
+                  "id": "afcc1b66-33ea-41a4-9790-f8d63aad554e",
+                  "weight": "",
+                  "reps": ""
+                }
+              ]
             }
           ]
         }
