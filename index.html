@@ -406,80 +406,136 @@
 
   .copy-btn:hover { background: #E8E4DC; }
 
-  /* Column headers */
-  .col-headers {
-    display: grid;
-    grid-template-columns: 1fr 58px 48px 48px 26px;
-    gap: 8px;
-    padding: 0 4px;
-    margin-bottom: 4px;
+  /* Exercise cards */
+  .exercise-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px 10px 6px;
+    margin-bottom: 8px;
   }
 
-  .col-header {
+  .ex-name-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .ex-name-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    background: transparent;
+    padding: 0;
+    min-width: 0;
+  }
+
+  .ex-name-input::placeholder { color: #c9c2b6; font-weight: 400; }
+
+  .del-ex-btn {
+    background: none;
+    border: none;
+    color: #c9c2b6;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    line-height: 1;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .del-ex-btn:hover { color: #c0392b; }
+
+  /* Set rows inside a card */
+  .set-col-headers {
+    display: grid;
+    grid-template-columns: 22px 1fr 1fr 26px;
+    gap: 6px;
+    padding: 0 2px;
+    margin-bottom: 3px;
+  }
+
+  .set-col-header {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--muted);
-    padding: 0 4px;
+    text-align: center;
   }
 
-  .col-header.center { text-align: center; }
+  .set-col-header:first-child { text-align: left; }
 
-  /* Exercise rows */
-  .exercise-row {
+  .set-row {
     display: grid;
-    grid-template-columns: 1fr 58px 48px 48px 26px;
-    gap: 8px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 7px 8px;
-    margin-bottom: 6px;
+    grid-template-columns: 22px 1fr 1fr 26px;
+    gap: 6px;
     align-items: center;
+    margin-bottom: 4px;
   }
 
-  .exercise-row input {
+  .set-num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .set-input {
     border: none;
     outline: none;
     font-family: inherit;
     font-size: 14px;
     color: var(--ink);
-    background: transparent;
-    width: 100%;
-    padding: 0;
-  }
-
-  .exercise-row input.name-input { font-weight: 500; }
-
-  .exercise-row input.num-input {
     background: #F5F4F1;
     border-radius: 8px;
     text-align: center;
     padding: 7px 2px;
+    width: 100%;
   }
 
-  .exercise-row input::placeholder { color: #c9c2b6; }
+  .set-input::placeholder { color: #c9c2b6; }
 
-  .delete-btn {
+  .del-set-btn {
     background: none;
     border: none;
     color: #c9c2b6;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
-    font-family: inherit;
     padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
     border-radius: 6px;
     transition: color 0.15s;
-    flex-shrink: 0;
   }
 
-  .delete-btn:hover { color: #c0392b; }
+  .del-set-btn:hover { color: #c0392b; }
 
+  .add-set-btn {
+    width: 100%;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 5px 0 3px;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.15s;
+    border-top: 1px solid var(--border);
+    margin-top: 2px;
+  }
+
+  .add-set-btn:hover { color: var(--ink); }
+
+  /* Add exercise button */
   .add-btn {
     display: block;
     width: 100%;
@@ -563,13 +619,6 @@
         <button class="copy-btn" id="copy-btn"></button>
       </div>
       <div id="exercises-section" style="display:none">
-        <div class="col-headers">
-          <span class="col-header">Exercise</span>
-          <span class="col-header center">kg</span>
-          <span class="col-header center">Reps</span>
-          <span class="col-header center">Sets</span>
-          <span class="col-header"></span>
-        </div>
         <div id="rows-container"></div>
         <button class="add-btn" id="add-row-btn">+ Add exercise</button>
       </div>
@@ -613,8 +662,24 @@ let saveTimer    = null;
 let statusTimer  = null;
 
 // ── Helpers ────────────────────────────────────────
-function makeRow(name="", weight="", reps="", sets="") {
-  return { id: crypto.randomUUID(), name, weight, reps, sets };
+function makeSet(weight="", reps="") {
+  return { id: crypto.randomUUID(), weight, reps };
+}
+
+function makeExercise(name="") {
+  return { id: crypto.randomUUID(), name, sets: [makeSet()] };
+}
+
+// Migrate old flat format { name, weight, reps, sets(count) } → card format
+function migrateExercise(e) {
+  if (!e) return makeExercise();
+  if (Array.isArray(e.sets)) return e; // already new format
+  const count = Math.max(parseInt(e.sets) || 1, 1);
+  return {
+    id: e.id || crypto.randomUUID(),
+    name: e.name || "",
+    sets: Array.from({ length: count }, () => makeSet(e.weight || "", e.reps || ""))
+  };
 }
 
 function dateStr(y, m, d) {
@@ -833,7 +898,7 @@ function closeDay() {
 function getOrCreateDay(ds, type) {
   if (!fullData.users[currentUser].days) fullData.users[currentUser].days = {};
   if (!fullData.users[currentUser].days[ds]) {
-    fullData.users[currentUser].days[ds] = { type, exercises: [makeRow(),makeRow(),makeRow()] };
+    fullData.users[currentUser].days[ds] = { type, exercises: [makeExercise(),makeExercise(),makeExercise()] };
   }
   return fullData.users[currentUser].days[ds];
 }
@@ -855,7 +920,7 @@ function renderTypeSelector() {
       } else {
         day.type = t.key;
         if (!day.exercises || !day.exercises.length) {
-          day.exercises = [makeRow(), makeRow(), makeRow()];
+          day.exercises = [makeExercise(), makeExercise(), makeExercise()];
         }
       }
       scheduleSave();
@@ -890,7 +955,12 @@ function updateCopyBar() {
     const src    = userDays()[prev];
     const target = userDays()[selectedDate];
     if (!src || !target) return;
-    target.exercises = src.exercises.map(e => ({ ...e, id: crypto.randomUUID() }));
+    // Deep-clone exercises including their sets arrays
+    target.exercises = src.exercises.map(e => ({
+      ...e,
+      id: crypto.randomUUID(),
+      sets: (e.sets || []).map(s => ({ ...s, id: crypto.randomUUID() }))
+    }));
     renderExercises();
     scheduleSave();
   };
@@ -898,9 +968,9 @@ function updateCopyBar() {
 }
 
 function renderExercises() {
-  const dayLog   = userDays()[selectedDate];
-  const section  = document.getElementById("exercises-section");
-  const noType   = document.getElementById("no-type-msg");
+  const dayLog    = userDays()[selectedDate];
+  const section   = document.getElementById("exercises-section");
+  const noType    = document.getElementById("no-type-msg");
   const container = document.getElementById("rows-container");
 
   if (!dayLog || !dayLog.type) {
@@ -912,37 +982,111 @@ function renderExercises() {
   section.style.display = "block";
   noType.style.display  = "none";
   container.innerHTML   = "";
-  (dayLog.exercises || []).forEach(row => container.appendChild(buildRow(row)));
-}
 
-function buildRow(row) {
-  const div = document.createElement("div");
-  div.className = "exercise-row";
-
-  function field(type, mode, cls, placeholder, val, key) {
-    const inp = document.createElement("input");
-    inp.type = type; inp.inputMode = mode; inp.className = cls;
-    inp.placeholder = placeholder; inp.value = val || "";
-    inp.addEventListener("input", e => { row[key] = e.target.value; scheduleSave(); });
-    return inp;
+  // Migrate any old-format exercises in place
+  if (dayLog.exercises) {
+    dayLog.exercises = dayLog.exercises.map(migrateExercise);
   }
 
-  div.appendChild(field("text", "text",    "name-input", "Exercise name", row.name,   "name"));
-  div.appendChild(field("text", "decimal", "num-input",  "—",             row.weight, "weight"));
-  div.appendChild(field("text", "numeric", "num-input",  "—",             row.reps,   "reps"));
-  div.appendChild(field("text", "numeric", "num-input",  "—",             row.sets,   "sets"));
+  (dayLog.exercises || []).forEach(ex => container.appendChild(buildExerciseCard(ex)));
+}
 
-  const del = document.createElement("button");
-  del.className = "delete-btn";
-  del.textContent = "✕";
-  del.addEventListener("click", () => {
+function buildExerciseCard(exercise) {
+  const card = document.createElement("div");
+  card.className = "exercise-card";
+
+  // ── Name row ──
+  const nameRow = document.createElement("div");
+  nameRow.className = "ex-name-row";
+
+  const nameInput = document.createElement("input");
+  nameInput.type = "text";
+  nameInput.className = "ex-name-input";
+  nameInput.placeholder = "Exercise name";
+  nameInput.value = exercise.name || "";
+  nameInput.addEventListener("input", e => { exercise.name = e.target.value; scheduleSave(); });
+
+  const delEx = document.createElement("button");
+  delEx.className = "del-ex-btn";
+  delEx.textContent = "✕";
+  delEx.addEventListener("click", () => {
     const dayLog = userDays()[selectedDate];
-    if (dayLog) dayLog.exercises = dayLog.exercises.filter(r => r.id !== row.id);
-    div.remove();
+    if (dayLog) dayLog.exercises = dayLog.exercises.filter(e => e.id !== exercise.id);
+    card.remove();
     scheduleSave();
   });
-  div.appendChild(del);
-  return div;
+
+  nameRow.appendChild(nameInput);
+  nameRow.appendChild(delEx);
+  card.appendChild(nameRow);
+
+  // ── Set column headers ──
+  const headers = document.createElement("div");
+  headers.className = "set-col-headers";
+  ["#", "kg", "reps", ""].forEach(h => {
+    const span = document.createElement("span");
+    span.className = "set-col-header";
+    span.textContent = h;
+    headers.appendChild(span);
+  });
+  card.appendChild(headers);
+
+  // ── Sets container ──
+  const setsEl = document.createElement("div");
+
+  function renderSets() {
+    setsEl.innerHTML = "";
+    (exercise.sets || []).forEach((s, idx) => {
+      const row = document.createElement("div");
+      row.className = "set-row";
+
+      const num = document.createElement("span");
+      num.className = "set-num";
+      num.textContent = idx + 1;
+
+      const wInp = document.createElement("input");
+      wInp.type = "text"; wInp.inputMode = "decimal";
+      wInp.className = "set-input"; wInp.placeholder = "—";
+      wInp.value = s.weight || "";
+      wInp.addEventListener("input", e => { s.weight = e.target.value; scheduleSave(); });
+
+      const rInp = document.createElement("input");
+      rInp.type = "text"; rInp.inputMode = "numeric";
+      rInp.className = "set-input"; rInp.placeholder = "—";
+      rInp.value = s.reps || "";
+      rInp.addEventListener("input", e => { s.reps = e.target.value; scheduleSave(); });
+
+      const delSet = document.createElement("button");
+      delSet.className = "del-set-btn";
+      delSet.textContent = "✕";
+      delSet.addEventListener("click", () => {
+        exercise.sets = exercise.sets.filter(x => x.id !== s.id);
+        renderSets();
+        scheduleSave();
+      });
+
+      row.appendChild(num); row.appendChild(wInp);
+      row.appendChild(rInp); row.appendChild(delSet);
+      setsEl.appendChild(row);
+    });
+  }
+
+  renderSets();
+  card.appendChild(setsEl);
+
+  // ── Add set ──
+  const addSetBtn = document.createElement("button");
+  addSetBtn.className = "add-set-btn";
+  addSetBtn.textContent = "+ add set";
+  addSetBtn.addEventListener("click", () => {
+    const last = exercise.sets[exercise.sets.length - 1];
+    exercise.sets.push(makeSet(last ? last.weight : "", ""));
+    renderSets();
+    scheduleSave();
+  });
+  card.appendChild(addSetBtn);
+
+  return card;
 }
 
 // ── Wire-up ────────────────────────────────────────
@@ -969,9 +1113,9 @@ document.getElementById("add-row-btn").addEventListener("click", () => {
   const dayLog = userDays()[selectedDate];
   if (!dayLog) return;
   if (!dayLog.exercises) dayLog.exercises = [];
-  const row = makeRow();
-  dayLog.exercises.push(row);
-  document.getElementById("rows-container").appendChild(buildRow(row));
+  const ex = makeExercise();
+  dayLog.exercises.push(ex);
+  document.getElementById("rows-container").appendChild(buildExerciseCard(ex));
   scheduleSave();
 });
 
