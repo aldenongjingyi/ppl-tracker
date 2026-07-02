@@ -2,7 +2,34 @@
   "users": {
     "alden": {
       "password": "",
-      "days": {}
+      "days": {
+        "2026-07-01": {
+          "type": "pushA",
+          "exercises": [
+            {
+              "id": "9fdd87d7-364c-4954-b830-892d6f0898fc",
+              "name": "",
+              "weight": "",
+              "reps": "",
+              "sets": ""
+            },
+            {
+              "id": "4badd900-503f-44b8-afdf-b445a2073abc",
+              "name": "",
+              "weight": "",
+              "reps": "",
+              "sets": ""
+            },
+            {
+              "id": "a8f14ea3-ea95-4800-9953-47df0dd18787",
+              "name": "",
+              "weight": "",
+              "reps": "",
+              "sets": ""
+            }
+          ]
+        }
+      }
     }
   }
 }
