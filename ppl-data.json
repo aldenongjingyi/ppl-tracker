@@ -28,6 +28,44 @@
               "sets": ""
             }
           ]
+        },
+        "2026-07-02": {
+          "type": "pullB",
+          "exercises": [
+            {
+              "id": "5bb4140e-fd5f-49e4-b0cf-c82ffbb3549b",
+              "name": "",
+              "sets": [
+                {
+                  "id": "1d983992-fab3-4361-bf16-ce244238e119",
+                  "weight": "",
+                  "reps": ""
+                }
+              ]
+            },
+            {
+              "id": "c518d915-9e36-41b5-ba86-a9568d1b431a",
+              "name": "",
+              "sets": [
+                {
+                  "id": "46274925-750e-4dc7-8b88-95025c1319d1",
+                  "weight": "",
+                  "reps": ""
+                }
+              ]
+            },
+            {
+              "id": "7ad696bb-a334-48dd-b2ab-7b8ae234cd24",
+              "name": "",
+              "sets": [
+                {
+                  "id": "6ee9729c-5e60-4ae2-b89b-235dcbdf2ff1",
+                  "weight": "",
+                  "reps": ""
+                }
+              ]
+            }
+          ]
         }
       }
     }
