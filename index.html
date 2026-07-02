@@ -18,9 +18,110 @@
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     min-height: 100vh;
+    overscroll-behavior: none;
   }
 
-  /* Header */
+  /* ─── Login ─────────────────────────────────────── */
+  #login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .login-logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .login-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  /* Existing user quick-pick pills */
+  #user-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .user-pill-btn {
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--ink);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .user-pill-btn:hover { background: #F2F0EB; border-color: #ccc7be; }
+  .user-pill-btn.selected { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .login-input {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--card);
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  .login-input:focus { border-color: #b8b0a5; }
+  .login-input::placeholder { color: #c9c2b6; }
+
+  .login-btn {
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 2px;
+  }
+
+  .login-btn:active { opacity: 0.8; }
+
+  .login-error {
+    font-size: 13px;
+    color: var(--push);
+    margin-top: 10px;
+    min-height: 18px;
+    text-align: center;
+  }
+
+  /* ─── App shell ──────────────────────────────────── */
+  #app { display: none; }
+
   #header {
     position: sticky;
     top: 0;
@@ -29,21 +130,25 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
-    padding: 12px 16px 0;
+    padding: 12px 16px;
   }
 
   .header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
   }
 
   .app-title {
     font-size: 17px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    color: var(--ink);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   #status {
@@ -52,27 +157,222 @@
     letter-spacing: 0.06em;
     color: var(--muted);
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.2s;
   }
 
   #status.visible { opacity: 1; }
 
-  /* Tabs */
-  .tabs {
+  .user-badge {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: capitalize;
+  }
+
+  .logout-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+
+  .logout-btn:hover { background: #F2F0EB; }
+
+  /* ─── Calendar ───────────────────────────────────── */
+  #calendar-view {
+    padding: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .month-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+
+  .nav-btn:hover { background: #F2F0EB; }
+
+  .week-headers {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  .week-header {
+    text-align: center;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 4px 0;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .cal-day {
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+    padding: 6px 2px;
+    min-height: 50px;
+    gap: 3px;
+  }
+
+  .cal-day.empty { cursor: default; pointer-events: none; }
+  .cal-day:not(.empty):hover { background: #F2F0EB; }
+
+  .cal-day.today {
+    border-color: var(--border);
+    background: var(--card);
+  }
+
+  .cal-day.has-workout {
+    background: var(--card);
+    border-color: var(--border);
+  }
+
+  .day-num {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .cal-day.today .day-num { font-weight: 700; }
+
+  .workout-badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #fff;
+    border-radius: 4px;
+    padding: 1px 4px;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* ─── Day view ───────────────────────────────────── */
+  #day-view {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 200;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #day-view.open { display: block; }
+
+  .day-header {
+    position: sticky;
+    top: 0;
+    background: rgba(250, 250, 248, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .back-btn:hover { color: var(--ink); }
+
+  .day-date-label {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+
+  #day-status {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  #day-status.visible { opacity: 1; }
+
+  .day-content {
+    padding: 16px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Type selector */
+  .type-selector {
     display: flex;
     gap: 6px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 10px;
     scrollbar-width: none;
+    margin-bottom: 14px;
   }
-  .tabs::-webkit-scrollbar { display: none; }
 
-  .tab-pill {
+  .type-selector::-webkit-scrollbar { display: none; }
+
+  .type-pill {
     flex-shrink: 0;
     border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 14px;
+    padding: 6px 13px;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
     border: 1px solid var(--border);
@@ -83,40 +383,28 @@
     white-space: nowrap;
   }
 
-  .tab-pill.active-push  { background: var(--push); color: #fff; border-color: transparent; }
-  .tab-pill.active-pull  { background: var(--pull); color: #fff; border-color: transparent; }
-  .tab-pill.active-legs  { background: var(--legs); color: #fff; border-color: transparent; }
+  .type-pill.active-push { background: var(--push); color: #fff; border-color: transparent; }
+  .type-pill.active-pull { background: var(--pull); color: #fff; border-color: transparent; }
+  .type-pill.active-legs { background: var(--legs); color: #fff; border-color: transparent; }
 
-  /* Content */
-  #content {
-    padding: 16px;
-    max-width: 700px;
-    margin: 0 auto;
+  /* Copy bar */
+  #copy-bar {
+    margin-bottom: 14px;
   }
 
-  .day-panel { display: none; }
-  .day-panel.active { display: block; }
-
-  /* Day label */
-  .day-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  .day-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .day-name {
-    font-size: 15px;
-    font-weight: 600;
+  .copy-btn {
+    background: #F2F0EB;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
     color: var(--ink);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
   }
+
+  .copy-btn:hover { background: #E8E4DC; }
 
   /* Column headers */
   .col-headers {
@@ -161,16 +449,13 @@
     padding: 0;
   }
 
-  .exercise-row input.name-input {
-    font-weight: 500;
-  }
+  .exercise-row input.name-input { font-weight: 500; }
 
   .exercise-row input.num-input {
     background: #F5F4F1;
     border-radius: 8px;
     text-align: center;
     padding: 7px 2px;
-    font-size: 14px;
   }
 
   .exercise-row input::placeholder { color: #c9c2b6; }
@@ -195,7 +480,6 @@
 
   .delete-btn:hover { color: #c0392b; }
 
-  /* Add button */
   .add-btn {
     display: block;
     width: 100%;
@@ -212,264 +496,504 @@
   }
 
   .add-btn:hover { background: #F2F0EB; }
+
+  .no-type-msg {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 14px;
+  }
 </style>
 </head>
 <body>
 
-<div id="header">
-  <div class="header-row">
-    <span class="app-title">PPL Tracker</span>
-    <span id="status">Saving…</span>
+<!-- ═══ Login screen ════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">PPL Tracker</div>
+    <div class="login-sub">Who's training today?</div>
+    <div id="user-pills"></div>
+    <div class="login-form">
+      <input id="login-username" class="login-input" type="text" placeholder="Username" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <input id="login-password" class="login-input" type="password" placeholder="Password (optional)">
+      <button class="login-btn" id="login-btn">Let's go →</button>
+    </div>
+    <div class="login-error" id="login-error"></div>
   </div>
-  <div class="tabs" id="tabs"></div>
 </div>
 
-<div id="content"></div>
+<!-- ═══ App ═════════════════════════════════════════ -->
+<div id="app">
+  <div id="header">
+    <div class="header-row">
+      <span class="app-title">PPL Tracker</span>
+      <div class="header-right">
+        <span id="status"></span>
+        <span id="user-badge" class="user-badge"></span>
+        <button class="logout-btn" id="logout-btn" title="Switch user">↩</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="calendar-view">
+    <div class="month-nav">
+      <button class="nav-btn" id="prev-month">‹</button>
+      <span class="month-label" id="month-label"></span>
+      <button class="nav-btn" id="next-month">›</button>
+    </div>
+    <div class="week-headers">
+      <div class="week-header">Mo</div><div class="week-header">Tu</div>
+      <div class="week-header">We</div><div class="week-header">Th</div>
+      <div class="week-header">Fr</div><div class="week-header">Sa</div>
+      <div class="week-header">Su</div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+
+  <!-- Day detail (full screen) -->
+  <div id="day-view">
+    <div class="day-header">
+      <button class="back-btn" id="back-btn">‹</button>
+      <div class="day-date-label" id="day-date-label"></div>
+      <span id="day-status"></span>
+    </div>
+    <div class="day-content">
+      <div class="type-selector" id="type-selector"></div>
+      <div id="copy-bar" style="display:none">
+        <button class="copy-btn" id="copy-btn"></button>
+      </div>
+      <div id="exercises-section" style="display:none">
+        <div class="col-headers">
+          <span class="col-header">Exercise</span>
+          <span class="col-header center">kg</span>
+          <span class="col-header center">Reps</span>
+          <span class="col-header center">Sets</span>
+          <span class="col-header"></span>
+        </div>
+        <div id="rows-container"></div>
+        <button class="add-btn" id="add-row-btn">+ Add exercise</button>
+      </div>
+      <div id="no-type-msg" class="no-type-msg" style="display:none">
+        Select a workout type above to start logging.
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 const GH_USER  = "aldenongjingyi";
 const GH_REPO  = "ppl-tracker";
 const GH_TOKEN = ["gho", "_376xGcWqmmxRXuvdT7TlitybOxlwsL16m3uv"].join("");
 const FILE_PATH = "ppl-data.json";
-
-const DAYS = [
-  { key: "pushA", label: "Push A", type: "push" },
-  { key: "pullA", label: "Pull A",  type: "pull" },
-  { key: "legsA", label: "Legs A",  type: "legs" },
-  { key: "pushB", label: "Push B",  type: "push" },
-  { key: "pullB", label: "Pull B",  type: "pull" },
-  { key: "legsB", label: "Legs B",  type: "legs" },
-];
-
-const TYPE_COLORS = { push: "var(--push)", pull: "var(--pull)", legs: "var(--legs)" };
-
-let fileSha = null;
-let data = {};
-let saveTimer = null;
-let statusTimer = null;
-let currentDay = DAYS[0].key;
-
-function makeRow() {
-  return { id: crypto.randomUUID(), name: "", weight: "", reps: "", sets: "" };
-}
-
-function defaultData() {
-  const d = {};
-  DAYS.forEach(({ key }) => {
-    d[key] = [makeRow(), makeRow(), makeRow()];
-  });
-  return d;
-}
-
-// --- GitHub API ---
-const API = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${FILE_PATH}`;
-const HEADERS = {
+const API       = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${FILE_PATH}`;
+const HEADERS   = {
   "Authorization": `token ${GH_TOKEN}`,
   "Content-Type": "application/json",
   "Accept": "application/vnd.github+json",
 };
 
-async function loadData() {
+const TYPES = [
+  { key: "pushA", label: "Push A", colorType: "push", color: "#B5483B" },
+  { key: "pullA", label: "Pull A", colorType: "pull", color: "#3B6FA0" },
+  { key: "legsA", label: "Legs A", colorType: "legs", color: "#3F8F5C" },
+  { key: "pushB", label: "Push B", colorType: "push", color: "#B5483B" },
+  { key: "pullB", label: "Pull B", colorType: "pull", color: "#3B6FA0" },
+  { key: "legsB", label: "Legs B", colorType: "legs", color: "#3F8F5C" },
+];
+const TYPE_MAP = Object.fromEntries(TYPES.map(t => [t.key, t]));
+
+// ── State ──────────────────────────────────────────
+let fileSha      = null;
+// Full data: { users: { "alice": { password: "", days: { "YYYY-MM-DD": { type, exercises: [] } } } } }
+let fullData     = { users: {} };
+let currentUser  = null; // username string
+let calYear, calMonth;
+let selectedDate = null; // "YYYY-MM-DD"
+let saveTimer    = null;
+let statusTimer  = null;
+
+// ── Helpers ────────────────────────────────────────
+function makeRow(name="", weight="", reps="", sets="") {
+  return { id: crypto.randomUUID(), name, weight, reps, sets };
+}
+
+function dateStr(y, m, d) {
+  return `${y}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+}
+
+function todayStr() {
+  const t = new Date();
+  return dateStr(t.getFullYear(), t.getMonth()+1, t.getDate());
+}
+
+function formatDateLabel(str) {
+  const [y,m,d] = str.split("-").map(Number);
+  return new Date(y, m-1, d).toLocaleDateString("en-GB", {
+    weekday: "long", day: "numeric", month: "long"
+  });
+}
+
+function userData() {
+  return fullData.users[currentUser] || { password: "", days: {} };
+}
+
+function userDays() {
+  return userData().days || {};
+}
+
+// ── GitHub ─────────────────────────────────────────
+async function ghLoad() {
   try {
     const res = await fetch(API, { headers: HEADERS });
-    if (res.status === 404) {
-      data = defaultData();
-      return;
-    }
+    if (res.status === 404) { fullData = { users: {} }; return; }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     fileSha = json.sha;
-    data = JSON.parse(atob(json.content.replace(/\n/g, "")));
-    // Ensure all day keys exist
-    DAYS.forEach(({ key }) => { if (!data[key]) data[key] = [makeRow(), makeRow(), makeRow()]; });
-  } catch (e) {
-    console.error("Load error:", e);
-    data = defaultData();
+    const parsed = JSON.parse(atob(json.content.replace(/\n/g, "")));
+    // Migrate old format (top-level pushA/pullA etc.)
+    fullData = parsed.users ? parsed : { users: {} };
+  } catch(e) {
+    console.error("Load:", e);
+    fullData = { users: {} };
   }
 }
 
-async function saveData() {
+async function ghSave() {
   showStatus("saving");
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
   const body = { message: "Update workout data", content: encoded };
   if (fileSha) body.sha = fileSha;
   try {
     const res = await fetch(API, { method: "PUT", headers: HEADERS, body: JSON.stringify(body) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    fileSha = json.content.sha;
+    fileSha = (await res.json()).content.sha;
     showStatus("saved");
-  } catch (e) {
-    console.error("Save error:", e);
+  } catch(e) {
+    console.error("Save:", e);
     showStatus("error");
   }
 }
 
 function scheduleSave() {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveData, 700);
+  saveTimer = setTimeout(ghSave, 700);
 }
 
-// --- Status ---
+// ── Status ─────────────────────────────────────────
 function showStatus(state) {
-  const el = document.getElementById("status");
-  clearTimeout(statusTimer);
-  if (state === "saving") {
-    el.textContent = "Saving…";
+  ["status","day-status"].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    clearTimeout(statusTimer);
+    el.textContent = state === "saving" ? "Saving…" : state === "saved" ? "Saved" : "Error";
     el.classList.add("visible");
-  } else if (state === "saved") {
-    el.textContent = "Saved";
-    el.classList.add("visible");
-    statusTimer = setTimeout(() => el.classList.remove("visible"), 1200);
-  } else {
-    el.textContent = "Error";
-    el.classList.add("visible");
-  }
+    if (state !== "saving") {
+      statusTimer = setTimeout(() => el.classList.remove("visible"), 1200);
+    }
+  });
 }
 
-// --- Render ---
-function renderTabs() {
-  const container = document.getElementById("tabs");
+// ── Login ──────────────────────────────────────────
+function renderUserPills() {
+  const container = document.getElementById("user-pills");
   container.innerHTML = "";
-  DAYS.forEach(({ key, label, type }) => {
+  const names = Object.keys(fullData.users);
+  if (!names.length) return;
+  names.forEach(name => {
     const btn = document.createElement("button");
-    btn.className = "tab-pill" + (key === currentDay ? ` active-${type}` : "");
-    btn.textContent = label;
+    btn.className = "user-pill-btn";
+    btn.textContent = name;
     btn.addEventListener("click", () => {
-      currentDay = key;
-      renderTabs();
-      renderContent();
+      document.getElementById("login-username").value = name;
+      document.querySelectorAll(".user-pill-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      document.getElementById("login-password").focus();
     });
     container.appendChild(btn);
   });
 }
 
-function renderContent() {
-  const container = document.getElementById("content");
+function tryLogin() {
+  const username = document.getElementById("login-username").value.trim().toLowerCase();
+  const password = document.getElementById("login-password").value;
+  const errEl    = document.getElementById("login-error");
+  errEl.textContent = "";
+
+  if (!username) { errEl.textContent = "Enter a username."; return; }
+
+  const existing = fullData.users[username];
+  if (existing) {
+    // Existing user: check password if one is set
+    if (existing.password && existing.password !== password) {
+      errEl.textContent = "Wrong password.";
+      return;
+    }
+  } else {
+    // New user: create account
+    fullData.users[username] = { password, days: {} };
+    ghSave();
+  }
+
+  currentUser = username;
+  localStorage.setItem("ppl_user", username);
+  enterApp();
+}
+
+function enterApp() {
+  document.getElementById("login-screen").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("user-badge").textContent = currentUser;
+  const now = new Date();
+  calYear  = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar();
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem("ppl_user");
+  selectedDate = null;
+  document.getElementById("day-view").classList.remove("open");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("login-username").value = "";
+  document.getElementById("login-password").value = "";
+  document.getElementById("login-error").textContent = "";
+  renderUserPills();
+}
+
+// ── Calendar ───────────────────────────────────────
+const MONTHS = ["January","February","March","April","May","June",
+                "July","August","September","October","November","December"];
+
+function renderCalendar() {
+  document.getElementById("month-label").textContent = `${MONTHS[calMonth]} ${calYear}`;
+  const grid  = document.getElementById("cal-grid");
+  const days  = userDays();
+  const today = todayStr();
+
+  // First day offset (Monday = 0)
+  let dow = new Date(calYear, calMonth, 1).getDay();
+  if (dow === 0) dow = 7;
+  const offset = dow - 1;
+  const total  = new Date(calYear, calMonth + 1, 0).getDate();
+
+  grid.innerHTML = "";
+
+  for (let i = 0; i < offset; i++) {
+    const e = document.createElement("div");
+    e.className = "cal-day empty";
+    grid.appendChild(e);
+  }
+
+  for (let d = 1; d <= total; d++) {
+    const ds   = dateStr(calYear, calMonth+1, d);
+    const cell = document.createElement("div");
+    cell.className = "cal-day";
+    if (ds === today) cell.classList.add("today");
+
+    const dayLog = days[ds];
+    if (dayLog && dayLog.type) cell.classList.add("has-workout");
+
+    const num = document.createElement("div");
+    num.className = "day-num";
+    num.textContent = d;
+    cell.appendChild(num);
+
+    if (dayLog && dayLog.type && TYPE_MAP[dayLog.type]) {
+      const t     = TYPE_MAP[dayLog.type];
+      const badge = document.createElement("div");
+      badge.className = "workout-badge";
+      badge.textContent = t.label;
+      badge.style.background = t.color;
+      cell.appendChild(badge);
+    }
+
+    cell.addEventListener("click", () => openDay(ds));
+    grid.appendChild(cell);
+  }
+}
+
+// ── Day view ───────────────────────────────────────
+function openDay(ds) {
+  selectedDate = ds;
+  document.getElementById("day-date-label").textContent = formatDateLabel(ds);
+  document.getElementById("day-view").classList.add("open");
+  renderTypeSelector();
+  renderExercises();
+  updateCopyBar();
+}
+
+function closeDay() {
+  document.getElementById("day-view").classList.remove("open");
+  selectedDate = null;
+  renderCalendar();
+}
+
+function getOrCreateDay(ds, type) {
+  if (!fullData.users[currentUser].days) fullData.users[currentUser].days = {};
+  if (!fullData.users[currentUser].days[ds]) {
+    fullData.users[currentUser].days[ds] = { type, exercises: [makeRow(),makeRow(),makeRow()] };
+  }
+  return fullData.users[currentUser].days[ds];
+}
+
+function renderTypeSelector() {
+  const container = document.getElementById("type-selector");
   container.innerHTML = "";
+  const dayLog = userDays()[selectedDate];
+  const cur    = dayLog ? dayLog.type : null;
 
-  DAYS.forEach(({ key, label, type }) => {
-    const panel = document.createElement("div");
-    panel.className = "day-panel" + (key === currentDay ? " active" : "");
-    panel.dataset.day = key;
-
-    // Day label
-    const dayLabel = document.createElement("div");
-    dayLabel.className = "day-label";
-    const dot = document.createElement("div");
-    dot.className = "day-dot";
-    dot.style.background = TYPE_COLORS[type];
-    const name = document.createElement("span");
-    name.className = "day-name";
-    name.textContent = label;
-    dayLabel.appendChild(dot);
-    dayLabel.appendChild(name);
-    panel.appendChild(dayLabel);
-
-    // Column headers
-    const headers = document.createElement("div");
-    headers.className = "col-headers";
-    ["Exercise", "kg", "Reps", "Sets", ""].forEach((h, i) => {
-      const span = document.createElement("span");
-      span.className = "col-header" + (i > 0 && i < 4 ? " center" : "");
-      span.textContent = h;
-      headers.appendChild(span);
-    });
-    panel.appendChild(headers);
-
-    // Rows
-    const rowsContainer = document.createElement("div");
-    rowsContainer.dataset.rowsFor = key;
-    (data[key] || []).forEach(row => rowsContainer.appendChild(buildRow(key, row)));
-    panel.appendChild(rowsContainer);
-
-    // Add button
-    const addBtn = document.createElement("button");
-    addBtn.className = "add-btn";
-    addBtn.textContent = "+ Add exercise";
-    addBtn.addEventListener("click", () => {
-      const newRow = makeRow();
-      data[key].push(newRow);
-      rowsContainer.appendChild(buildRow(key, newRow));
+  TYPES.forEach(t => {
+    const pill = document.createElement("button");
+    pill.className = "type-pill" + (cur === t.key ? ` active-${t.colorType}` : "");
+    pill.textContent = t.label;
+    pill.addEventListener("click", () => {
+      const day = userDays()[selectedDate];
+      if (!day) {
+        getOrCreateDay(selectedDate, t.key);
+      } else {
+        day.type = t.key;
+        if (!day.exercises || !day.exercises.length) {
+          day.exercises = [makeRow(), makeRow(), makeRow()];
+        }
+      }
       scheduleSave();
+      renderTypeSelector();
+      renderExercises();
+      updateCopyBar();
     });
-    panel.appendChild(addBtn);
-
-    container.appendChild(panel);
+    container.appendChild(pill);
   });
 }
 
-function buildRow(dayKey, row) {
+function findPrevSession(beforeDate, type) {
+  return Object.keys(userDays())
+    .filter(d => d < beforeDate && userDays()[d].type === type)
+    .sort().pop() || null;
+}
+
+function updateCopyBar() {
+  const dayLog = userDays()[selectedDate];
+  const bar    = document.getElementById("copy-bar");
+  const btn    = document.getElementById("copy-btn");
+
+  if (!dayLog || !dayLog.type) { bar.style.display = "none"; return; }
+
+  const prev = findPrevSession(selectedDate, dayLog.type);
+  if (!prev) { bar.style.display = "none"; return; }
+
+  const [y,m,d] = prev.split("-").map(Number);
+  const label = new Date(y,m-1,d).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+  btn.textContent = `↓ Copy from ${label}`;
+  btn.onclick = () => {
+    const src    = userDays()[prev];
+    const target = userDays()[selectedDate];
+    if (!src || !target) return;
+    target.exercises = src.exercises.map(e => ({ ...e, id: crypto.randomUUID() }));
+    renderExercises();
+    scheduleSave();
+  };
+  bar.style.display = "block";
+}
+
+function renderExercises() {
+  const dayLog   = userDays()[selectedDate];
+  const section  = document.getElementById("exercises-section");
+  const noType   = document.getElementById("no-type-msg");
+  const container = document.getElementById("rows-container");
+
+  if (!dayLog || !dayLog.type) {
+    section.style.display = "none";
+    noType.style.display  = "block";
+    return;
+  }
+
+  section.style.display = "block";
+  noType.style.display  = "none";
+  container.innerHTML   = "";
+  (dayLog.exercises || []).forEach(row => container.appendChild(buildRow(row)));
+}
+
+function buildRow(row) {
   const div = document.createElement("div");
   div.className = "exercise-row";
-  div.dataset.id = row.id;
 
-  const nameInput = document.createElement("input");
-  nameInput.type = "text";
-  nameInput.className = "name-input";
-  nameInput.placeholder = "Exercise name";
-  nameInput.value = row.name || "";
-  nameInput.addEventListener("input", e => {
-    row.name = e.target.value;
-    scheduleSave();
-  });
+  function field(type, mode, cls, placeholder, val, key) {
+    const inp = document.createElement("input");
+    inp.type = type; inp.inputMode = mode; inp.className = cls;
+    inp.placeholder = placeholder; inp.value = val || "";
+    inp.addEventListener("input", e => { row[key] = e.target.value; scheduleSave(); });
+    return inp;
+  }
 
-  const weightInput = document.createElement("input");
-  weightInput.type = "text";
-  weightInput.inputMode = "decimal";
-  weightInput.className = "num-input";
-  weightInput.placeholder = "—";
-  weightInput.value = row.weight || "";
-  weightInput.addEventListener("input", e => {
-    row.weight = e.target.value;
-    scheduleSave();
-  });
+  div.appendChild(field("text", "text",    "name-input", "Exercise name", row.name,   "name"));
+  div.appendChild(field("text", "decimal", "num-input",  "—",             row.weight, "weight"));
+  div.appendChild(field("text", "numeric", "num-input",  "—",             row.reps,   "reps"));
+  div.appendChild(field("text", "numeric", "num-input",  "—",             row.sets,   "sets"));
 
-  const repsInput = document.createElement("input");
-  repsInput.type = "text";
-  repsInput.inputMode = "numeric";
-  repsInput.className = "num-input";
-  repsInput.placeholder = "—";
-  repsInput.value = row.reps || "";
-  repsInput.addEventListener("input", e => {
-    row.reps = e.target.value;
-    scheduleSave();
-  });
-
-  const setsInput = document.createElement("input");
-  setsInput.type = "text";
-  setsInput.inputMode = "numeric";
-  setsInput.className = "num-input";
-  setsInput.placeholder = "—";
-  setsInput.value = row.sets || "";
-  setsInput.addEventListener("input", e => {
-    row.sets = e.target.value;
-    scheduleSave();
-  });
-
-  const delBtn = document.createElement("button");
-  delBtn.className = "delete-btn";
-  delBtn.title = "Remove";
-  delBtn.textContent = "✕";
-  delBtn.addEventListener("click", () => {
-    data[dayKey] = data[dayKey].filter(r => r.id !== row.id);
+  const del = document.createElement("button");
+  del.className = "delete-btn";
+  del.textContent = "✕";
+  del.addEventListener("click", () => {
+    const dayLog = userDays()[selectedDate];
+    if (dayLog) dayLog.exercises = dayLog.exercises.filter(r => r.id !== row.id);
     div.remove();
     scheduleSave();
   });
-
-  div.appendChild(nameInput);
-  div.appendChild(weightInput);
-  div.appendChild(repsInput);
-  div.appendChild(setsInput);
-  div.appendChild(delBtn);
+  div.appendChild(del);
   return div;
 }
 
-// --- Init ---
+// ── Wire-up ────────────────────────────────────────
+document.getElementById("login-btn").addEventListener("click", tryLogin);
+["login-username","login-password"].forEach(id => {
+  document.getElementById(id).addEventListener("keydown", e => {
+    if (e.key === "Enter") tryLogin();
+  });
+});
+
+document.getElementById("logout-btn").addEventListener("click", logout);
+document.getElementById("back-btn").addEventListener("click", closeDay);
+
+document.getElementById("prev-month").addEventListener("click", () => {
+  if (--calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+});
+document.getElementById("next-month").addEventListener("click", () => {
+  if (++calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+});
+
+document.getElementById("add-row-btn").addEventListener("click", () => {
+  const dayLog = userDays()[selectedDate];
+  if (!dayLog) return;
+  if (!dayLog.exercises) dayLog.exercises = [];
+  const row = makeRow();
+  dayLog.exercises.push(row);
+  document.getElementById("rows-container").appendChild(buildRow(row));
+  scheduleSave();
+});
+
+// Swipe down to close day view (when scrolled to top)
+let touchY0 = 0;
+const dayView = document.getElementById("day-view");
+dayView.addEventListener("touchstart", e => { touchY0 = e.touches[0].clientY; }, { passive: true });
+dayView.addEventListener("touchend",   e => {
+  if (dayView.scrollTop === 0 && e.changedTouches[0].clientY - touchY0 > 60) closeDay();
+}, { passive: true });
+
+// ── Init ───────────────────────────────────────────
 (async () => {
-  await loadData();
-  renderTabs();
-  renderContent();
+  await ghLoad();
+  renderUserPills();
+
+  // Auto-login if user is stored
+  const saved = localStorage.getItem("ppl_user");
+  if (saved && fullData.users[saved]) {
+    currentUser = saved;
+    enterApp();
+  }
 })();
 </script>
 </body>
