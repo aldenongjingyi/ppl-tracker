@@ -71,7 +71,12 @@
                 {
                   "id": "6ee9729c-5e60-4ae2-b89b-235dcbdf2ff1",
                   "weight": "50",
-                  "reps": "8"
+                  "reps": "12"
+                },
+                {
+                  "id": "8d59c712-c707-4b8d-af09-aec68b88e57c",
+                  "weight": "50",
+                  "reps": ""
                 }
               ]
             }
