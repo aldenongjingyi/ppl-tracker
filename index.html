@@ -453,9 +453,10 @@
   .del-ex-btn:hover { color: #c0392b; }
 
   /* Set rows inside a card */
+  /* grid: # / kg / reps / drop / delete */
   .set-col-headers {
     display: grid;
-    grid-template-columns: 22px 1fr 1fr 26px;
+    grid-template-columns: 22px 1fr 1fr 30px 26px;
     gap: 6px;
     padding: 0 2px;
     margin-bottom: 3px;
@@ -473,7 +474,7 @@
 
   .set-row {
     display: grid;
-    grid-template-columns: 22px 1fr 1fr 26px;
+    grid-template-columns: 22px 1fr 1fr 30px 26px;
     gap: 6px;
     align-items: center;
     margin-bottom: 4px;
@@ -501,6 +502,47 @@
   }
 
   .set-input::placeholder { color: #c9c2b6; }
+
+  /* Drop button (↓) on each set row */
+  .drop-btn {
+    background: none;
+    border: none;
+    color: #c9c2b6;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+
+  .drop-btn:hover { color: var(--pull); }
+
+  /* Drop segments */
+  .drops-wrap {
+    border-left: 2px solid var(--border);
+    margin-left: 9px;
+    padding-left: 6px;
+    margin-bottom: 2px;
+  }
+
+  .drop-row {
+    display: grid;
+    grid-template-columns: 22px 1fr 1fr 30px 26px;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .drop-arrow {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1;
+  }
 
   .del-set-btn {
     background: none;
@@ -955,11 +997,15 @@ function updateCopyBar() {
     const src    = userDays()[prev];
     const target = userDays()[selectedDate];
     if (!src || !target) return;
-    // Deep-clone exercises including their sets arrays
+    // Deep-clone exercises including sets and their drop segments
     target.exercises = src.exercises.map(e => ({
       ...e,
       id: crypto.randomUUID(),
-      sets: (e.sets || []).map(s => ({ ...s, id: crypto.randomUUID() }))
+      sets: (e.sets || []).map(s => ({
+        ...s,
+        id: crypto.randomUUID(),
+        drops: (s.drops || []).map(d => ({ ...d, id: crypto.randomUUID() }))
+      }))
     }));
     renderExercises();
     scheduleSave();
@@ -1023,7 +1069,7 @@ function buildExerciseCard(exercise) {
   // ── Set column headers ──
   const headers = document.createElement("div");
   headers.className = "set-col-headers";
-  ["#", "kg", "reps", ""].forEach(h => {
+  ["#", "kg", "reps", "", ""].forEach(h => {
     const span = document.createElement("span");
     span.className = "set-col-header";
     span.textContent = h;
@@ -1034,9 +1080,19 @@ function buildExerciseCard(exercise) {
   // ── Sets container ──
   const setsEl = document.createElement("div");
 
+  function makeSetInput(mode, val, onInput) {
+    const inp = document.createElement("input");
+    inp.type = "text"; inp.inputMode = mode;
+    inp.className = "set-input"; inp.placeholder = "—";
+    inp.value = val || "";
+    inp.addEventListener("input", e => { onInput(e.target.value); scheduleSave(); });
+    return inp;
+  }
+
   function renderSets() {
     setsEl.innerHTML = "";
     (exercise.sets || []).forEach((s, idx) => {
+      // ── Main set row ──
       const row = document.createElement("div");
       row.className = "set-row";
 
@@ -1044,17 +1100,16 @@ function buildExerciseCard(exercise) {
       num.className = "set-num";
       num.textContent = idx + 1;
 
-      const wInp = document.createElement("input");
-      wInp.type = "text"; wInp.inputMode = "decimal";
-      wInp.className = "set-input"; wInp.placeholder = "—";
-      wInp.value = s.weight || "";
-      wInp.addEventListener("input", e => { s.weight = e.target.value; scheduleSave(); });
-
-      const rInp = document.createElement("input");
-      rInp.type = "text"; rInp.inputMode = "numeric";
-      rInp.className = "set-input"; rInp.placeholder = "—";
-      rInp.value = s.reps || "";
-      rInp.addEventListener("input", e => { s.reps = e.target.value; scheduleSave(); });
+      const dropBtn = document.createElement("button");
+      dropBtn.className = "drop-btn";
+      dropBtn.title = "Add drop set";
+      dropBtn.textContent = "↓";
+      dropBtn.addEventListener("click", () => {
+        if (!s.drops) s.drops = [];
+        s.drops.push(makeSet());
+        renderSets();
+        scheduleSave();
+      });
 
       const delSet = document.createElement("button");
       delSet.className = "del-set-btn";
@@ -1065,9 +1120,43 @@ function buildExerciseCard(exercise) {
         scheduleSave();
       });
 
-      row.appendChild(num); row.appendChild(wInp);
-      row.appendChild(rInp); row.appendChild(delSet);
+      row.appendChild(num);
+      row.appendChild(makeSetInput("decimal", s.weight, v => { s.weight = v; }));
+      row.appendChild(makeSetInput("numeric", s.reps,   v => { s.reps   = v; }));
+      row.appendChild(dropBtn);
+      row.appendChild(delSet);
       setsEl.appendChild(row);
+
+      // ── Drop segments ──
+      if (s.drops && s.drops.length) {
+        const wrap = document.createElement("div");
+        wrap.className = "drops-wrap";
+        s.drops.forEach(drop => {
+          const dRow = document.createElement("div");
+          dRow.className = "drop-row";
+
+          const arrow = document.createElement("span");
+          arrow.className = "drop-arrow";
+          arrow.textContent = "→";
+
+          const delDrop = document.createElement("button");
+          delDrop.className = "del-set-btn";
+          delDrop.textContent = "✕";
+          delDrop.addEventListener("click", () => {
+            s.drops = s.drops.filter(d => d.id !== drop.id);
+            renderSets();
+            scheduleSave();
+          });
+
+          dRow.appendChild(arrow);
+          dRow.appendChild(makeSetInput("decimal", drop.weight, v => { drop.weight = v; }));
+          dRow.appendChild(makeSetInput("numeric", drop.reps,   v => { drop.reps   = v; }));
+          dRow.appendChild(document.createElement("span")); // spacer
+          dRow.appendChild(delDrop);
+          wrap.appendChild(dRow);
+        });
+        setsEl.appendChild(wrap);
+      }
     });
   }
 
