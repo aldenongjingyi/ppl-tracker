@@ -92,12 +92,14 @@
                 {
                   "id": "afcc1b66-33ea-41a4-9790-f8d63aad554e",
                   "weight": "15",
-                  "reps": "4"
-                },
-                {
-                  "id": "fb011aec-91ad-4f51-985a-2503fc16f6b8",
-                  "weight": "10",
-                  "reps": "6"
+                  "reps": "4",
+                  "drops": [
+                    {
+                      "id": "ec1594a0-528b-47b2-9c9d-d83597997715",
+                      "weight": "10",
+                      "reps": "6"
+                    }
+                  ]
                 }
               ]
             },
@@ -108,12 +110,14 @@
                 {
                   "id": "14c0afc2-e071-4ff3-8119-1d2c786b40ca",
                   "weight": "39",
-                  "reps": "6"
-                },
-                {
-                  "id": "bc19dcd2-0584-4cc7-a1f5-b67d2fcf4254",
-                  "weight": "32",
-                  "reps": "4"
+                  "reps": "6",
+                  "drops": [
+                    {
+                      "id": "1b31f42f-cdb8-49d8-98cb-a326ea99fc5f",
+                      "weight": "32",
+                      "reps": "4"
+                    }
+                  ]
                 }
               ]
             }
