@@ -30,589 +30,400 @@
     padding: 24px 20px;
   }
 
-  .login-card {
-    width: 100%;
-    max-width: 340px;
-  }
+  .login-card { width: 100%; max-width: 340px; }
 
   .login-logo {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 4px;
+    font-size: 22px; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 4px;
   }
 
-  .login-sub {
-    font-size: 14px;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
+  .login-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
 
-  /* Existing user quick-pick pills */
-  #user-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 16px;
-  }
+  #user-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 
   .user-pill-btn {
-    border-radius: 999px;
-    padding: 6px 14px;
-    font-size: 13px;
-    font-weight: 500;
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--ink);
-    font-family: inherit;
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border); background: var(--card); color: var(--ink);
+    font-family: inherit; cursor: pointer; transition: background 0.15s, border-color 0.15s;
   }
-
   .user-pill-btn:hover { background: #F2F0EB; border-color: #ccc7be; }
   .user-pill-btn.selected { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  .login-form { display: flex; flex-direction: column; gap: 10px; }
 
   .login-input {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 13px 14px;
-    font-size: 15px;
-    font-family: inherit;
-    color: var(--ink);
-    background: var(--card);
-    outline: none;
-    transition: border-color 0.15s;
-    width: 100%;
+    border: 1px solid var(--border); border-radius: 12px; padding: 13px 14px;
+    font-size: 15px; font-family: inherit; color: var(--ink); background: var(--card);
+    outline: none; transition: border-color 0.15s; width: 100%;
   }
-
   .login-input:focus { border-color: #b8b0a5; }
   .login-input::placeholder { color: #c9c2b6; }
 
   .login-btn {
-    border-radius: 12px;
-    padding: 13px;
-    font-size: 15px;
-    font-weight: 600;
-    font-family: inherit;
-    background: var(--ink);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s;
-    margin-top: 2px;
+    border-radius: 12px; padding: 13px; font-size: 15px; font-weight: 600;
+    font-family: inherit; background: var(--ink); color: #fff; border: none;
+    cursor: pointer; transition: opacity 0.15s; margin-top: 2px;
   }
-
   .login-btn:active { opacity: 0.8; }
 
   .login-error {
-    font-size: 13px;
-    color: var(--push);
-    margin-top: 10px;
-    min-height: 18px;
-    text-align: center;
+    font-size: 13px; color: var(--push); margin-top: 10px; min-height: 18px; text-align: center;
   }
 
   /* ─── App shell ──────────────────────────────────── */
   #app { display: none; }
 
   #header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(250, 250, 248, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 16px;
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 16px;
   }
 
-  .header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .header-row { display: flex; align-items: center; justify-content: space-between; }
 
-  .app-title {
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
+  .app-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
 
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .header-right { display: flex; align-items: center; gap: 10px; }
 
   #status {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    opacity: 0;
-    transition: opacity 0.2s;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); opacity: 0; transition: opacity 0.2s;
   }
-
   #status.visible { opacity: 1; }
 
-  .user-badge {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: capitalize;
-  }
+  .user-badge { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: capitalize; }
 
   .logout-btn {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-    color: var(--muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    width: 30px; height: 30px; font-size: 15px; color: var(--muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: background 0.15s;
   }
-
   .logout-btn:hover { background: #F2F0EB; }
 
   /* ─── Calendar ───────────────────────────────────── */
-  #calendar-view {
-    padding: 16px;
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  #calendar-view { padding: 16px; max-width: 500px; margin: 0 auto; }
 
   .month-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
   }
 
-  .month-label {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
+  .month-label { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
 
   .nav-btn {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--muted);
-    font-size: 18px;
-    line-height: 1;
-    transition: background 0.15s;
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--muted); font-size: 18px; line-height: 1; transition: background 0.15s;
   }
-
   .nav-btn:hover { background: #F2F0EB; }
 
   .week-headers {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-bottom: 4px;
+    display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 4px;
   }
-
   .week-header {
-    text-align: center;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    padding: 4px 0;
+    text-align: center; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--muted); padding: 4px 0;
   }
 
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
 
   .cal-day {
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s;
-    border: 1px solid transparent;
-    padding: 6px 2px;
-    min-height: 50px;
-    gap: 3px;
+    border-radius: 10px; cursor: pointer; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; transition: background 0.15s;
+    border: 1px solid transparent; padding: 6px 2px; min-height: 50px; gap: 3px;
   }
-
   .cal-day.empty { cursor: default; pointer-events: none; }
   .cal-day:not(.empty):hover { background: #F2F0EB; }
+  .cal-day.today { border-color: var(--border); background: var(--card); }
+  .cal-day.has-workout { background: var(--card); border-color: var(--border); }
 
-  .cal-day.today {
-    border-color: var(--border);
-    background: var(--card);
-  }
-
-  .cal-day.has-workout {
-    background: var(--card);
-    border-color: var(--border);
-  }
-
-  .day-num {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
-    line-height: 1;
-  }
-
+  .day-num { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1; }
   .cal-day.today .day-num { font-weight: 700; }
 
   .workout-badge {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: #fff;
-    border-radius: 4px;
-    padding: 1px 4px;
-    line-height: 1.4;
-    white-space: nowrap;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.02em;
+    color: #fff; border-radius: 4px; padding: 1px 4px; line-height: 1.4; white-space: nowrap;
   }
 
   /* ─── Day view ───────────────────────────────────── */
   #day-view {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 200;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    display: none; position: fixed; inset: 0; background: var(--bg);
+    z-index: 200; overflow-y: auto; -webkit-overflow-scrolling: touch;
   }
-
   #day-view.open { display: block; }
 
   .day-header {
-    position: sticky;
-    top: 0;
-    background: rgba(250, 250, 248, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    position: sticky; top: 0;
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
   }
 
   .back-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    flex-shrink: 0;
+    background: none; border: none; font-size: 24px; color: var(--muted);
+    cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0;
   }
-
   .back-btn:hover { color: var(--ink); }
 
-  .day-date-label {
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    flex: 1;
-  }
+  .day-date-label { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
 
   #day-status {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    opacity: 0;
-    transition: opacity 0.2s;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--muted); opacity: 0; transition: opacity 0.2s;
   }
-
   #day-status.visible { opacity: 1; }
 
-  .day-content {
-    padding: 16px;
-    max-width: 700px;
-    margin: 0 auto;
-  }
+  .day-content { padding: 16px; max-width: 700px; margin: 0 auto; }
 
   /* Type selector */
   .type-selector {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-bottom: 14px;
+    display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; margin-bottom: 14px;
   }
-
   .type-selector::-webkit-scrollbar { display: none; }
 
   .type-pill {
-    flex-shrink: 0;
-    border-radius: 999px;
-    padding: 6px 13px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: inherit;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    white-space: nowrap;
+    flex-shrink: 0; border-radius: 999px; padding: 6px 13px; font-size: 13px;
+    font-weight: 500; cursor: pointer; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-family: inherit;
+    transition: background 0.15s, color 0.15s, border-color 0.15s; white-space: nowrap;
   }
-
   .type-pill.active-push { background: var(--push); color: #fff; border-color: transparent; }
   .type-pill.active-pull { background: var(--pull); color: #fff; border-color: transparent; }
   .type-pill.active-legs { background: var(--legs); color: #fff; border-color: transparent; }
 
   /* Copy bar */
-  #copy-bar {
-    margin-bottom: 14px;
-  }
+  #copy-bar { margin-bottom: 14px; }
 
   .copy-btn {
-    background: #F2F0EB;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 13px;
-    color: var(--ink);
-    font-family: inherit;
-    cursor: pointer;
-    transition: background 0.15s;
+    background: #F2F0EB; border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 13px; color: var(--ink); font-family: inherit;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
   }
-
   .copy-btn:hover { background: #E8E4DC; }
+  .copy-btn.confirm { color: var(--push); border-color: var(--push); background: #FDF2F1; }
 
   /* Exercise cards */
   .exercise-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px 10px 6px;
-    margin-bottom: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 10px 6px; margin-bottom: 8px;
   }
 
-  .ex-name-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
+  .ex-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 
   .ex-name-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    background: transparent;
-    padding: 0;
-    min-width: 0;
+    flex: 1; border: none; outline: none; font-family: inherit; font-size: 14px;
+    font-weight: 600; color: var(--ink); background: transparent; padding: 0; min-width: 0;
   }
-
   .ex-name-input::placeholder { color: #c9c2b6; font-weight: 400; }
 
-  .del-ex-btn {
-    background: none;
-    border: none;
-    color: #c9c2b6;
-    font-size: 13px;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 6px;
-    line-height: 1;
-    transition: color 0.15s;
-    flex-shrink: 0;
+  .ex-pick-btn {
+    background: none; border: none; color: #c9c2b6; font-size: 15px; cursor: pointer;
+    padding: 4px 5px; border-radius: 6px; line-height: 1; transition: color 0.15s; flex-shrink: 0;
   }
+  .ex-pick-btn:hover { color: var(--ink); }
 
+  .del-ex-btn {
+    background: none; border: none; color: #c9c2b6; font-size: 13px; cursor: pointer;
+    padding: 4px; border-radius: 6px; line-height: 1; transition: color 0.15s; flex-shrink: 0;
+  }
   .del-ex-btn:hover { color: #c0392b; }
 
-  /* Set rows inside a card */
-  /* grid: # / kg / reps / drop / delete */
+  /* Set rows: # / kg / reps / drop / delete */
   .set-col-headers {
-    display: grid;
-    grid-template-columns: 22px 1fr 1fr 30px 26px;
-    gap: 6px;
-    padding: 0 2px;
-    margin-bottom: 3px;
+    display: grid; grid-template-columns: 22px 1fr 1fr 30px 26px;
+    gap: 6px; padding: 0 2px; margin-bottom: 3px;
   }
-
   .set-col-header {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--muted);
-    text-align: center;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted); text-align: center;
   }
-
   .set-col-header:first-child { text-align: left; }
 
   .set-row {
-    display: grid;
-    grid-template-columns: 22px 1fr 1fr 30px 26px;
-    gap: 6px;
-    align-items: center;
-    margin-bottom: 4px;
+    display: grid; grid-template-columns: 22px 1fr 1fr 30px 26px;
+    gap: 6px; align-items: center; margin-bottom: 4px;
   }
 
-  .set-num {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1;
-  }
+  .set-num { font-size: 11px; font-weight: 600; color: var(--muted); text-align: center; line-height: 1; }
 
   .set-input {
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: 14px;
-    color: var(--ink);
-    background: #F5F4F1;
-    border-radius: 8px;
-    text-align: center;
-    padding: 7px 2px;
-    width: 100%;
+    border: none; outline: none; font-family: inherit; font-size: 14px; color: var(--ink);
+    background: #F5F4F1; border-radius: 8px; text-align: center; padding: 7px 2px; width: 100%;
   }
-
   .set-input::placeholder { color: #c9c2b6; }
 
-  /* Drop button (↓) on each set row */
   .drop-btn {
-    background: none;
-    border: none;
-    color: #c9c2b6;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 4px 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: color 0.15s;
-    line-height: 1;
+    background: none; border: none; color: #c9c2b6; font-size: 14px; cursor: pointer;
+    padding: 4px 2px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; transition: color 0.15s; line-height: 1;
   }
-
   .drop-btn:hover { color: var(--pull); }
 
-  /* Drop segments */
   .drops-wrap {
-    border-left: 2px solid var(--border);
-    margin-left: 9px;
-    padding-left: 6px;
-    margin-bottom: 2px;
+    border-left: 2px solid var(--border); margin-left: 9px;
+    padding-left: 6px; margin-bottom: 2px;
   }
 
   .drop-row {
-    display: grid;
-    grid-template-columns: 22px 1fr 1fr 30px 26px;
-    gap: 6px;
-    align-items: center;
-    margin-bottom: 4px;
+    display: grid; grid-template-columns: 22px 1fr 1fr 30px 26px;
+    gap: 6px; align-items: center; margin-bottom: 4px;
   }
 
-  .drop-arrow {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1;
-  }
+  .drop-arrow { font-size: 11px; color: var(--muted); text-align: center; line-height: 1; }
 
   .del-set-btn {
-    background: none;
-    border: none;
-    color: #c9c2b6;
-    font-size: 13px;
-    cursor: pointer;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: color 0.15s;
+    background: none; border: none; color: #c9c2b6; font-size: 13px; cursor: pointer;
+    padding: 4px; display: flex; align-items: center; justify-content: center;
+    border-radius: 6px; transition: color 0.15s;
   }
-
   .del-set-btn:hover { color: #c0392b; }
 
   .add-set-btn {
-    width: 100%;
-    border: none;
-    background: none;
-    color: var(--muted);
-    font-family: inherit;
-    font-size: 12px;
-    padding: 5px 0 3px;
-    cursor: pointer;
-    text-align: center;
-    transition: color 0.15s;
-    border-top: 1px solid var(--border);
-    margin-top: 2px;
+    width: 100%; border: none; background: none; color: var(--muted); font-family: inherit;
+    font-size: 12px; padding: 5px 0 3px; cursor: pointer; text-align: center;
+    transition: color 0.15s; border-top: 1px solid var(--border); margin-top: 2px;
   }
-
   .add-set-btn:hover { color: var(--ink); }
 
-  /* Add exercise button */
   .add-btn {
-    display: block;
-    width: 100%;
-    border-radius: 12px;
-    border: 1.5px dashed var(--border);
-    background: none;
-    color: var(--muted);
-    font-family: inherit;
-    font-size: 14px;
-    padding: 10px;
-    margin-top: 6px;
-    cursor: pointer;
-    transition: background 0.15s;
+    display: block; width: 100%; border-radius: 12px; border: 1.5px dashed var(--border);
+    background: none; color: var(--muted); font-family: inherit; font-size: 14px;
+    padding: 10px; margin-top: 6px; cursor: pointer; transition: background 0.15s;
   }
-
   .add-btn:hover { background: #F2F0EB; }
 
   .no-type-msg {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--muted);
-    font-size: 14px;
+    text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px;
   }
+
+  /* Notes */
+  .notes-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted); margin: 16px 0 6px; padding: 0 4px;
+  }
+
+  .notes-input {
+    width: 100%; border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px; font-size: 14px; font-family: inherit; color: var(--ink);
+    background: var(--card); resize: none; outline: none; min-height: 76px;
+    transition: border-color 0.15s; line-height: 1.5;
+  }
+  .notes-input:focus { border-color: #b8b0a5; }
+  .notes-input::placeholder { color: #c9c2b6; }
+
+  /* Today button in month nav */
+  .month-nav-right { display: flex; align-items: center; gap: 6px; }
+
+  .today-btn {
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 0 10px; height: 32px; font-size: 12px; font-weight: 500;
+    color: var(--muted); font-family: inherit; cursor: pointer; transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .today-btn:hover { background: #F2F0EB; }
+
+  /* Loading overlay */
+  #loading {
+    position: fixed; inset: 0; background: var(--bg);
+    display: flex; align-items: center; justify-content: center; z-index: 9999;
+  }
+
+  .spinner {
+    width: 22px; height: 22px; border: 2px solid var(--border);
+    border-top-color: var(--muted); border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Offline/error bar */
+  #offline-bar {
+    display: none; background: #FDF2F1; border-bottom: 1px solid #f0c8c4;
+    padding: 8px 16px; font-size: 12px; color: var(--push);
+    text-align: center; position: sticky; top: 0; z-index: 99;
+  }
+
+  #offline-bar.visible { display: block; }
+
+  #offline-bar button {
+    background: none; border: none; color: var(--push); font-family: inherit;
+    font-size: 12px; font-weight: 600; cursor: pointer; margin-left: 8px;
+    text-decoration: underline;
+  }
+
+  /* ─── Exercise picker (bottom sheet) ─────────────── */
+  #ex-picker {
+    display: none; position: fixed; inset: 0; z-index: 600;
+  }
+  #ex-picker.open { display: block; }
+
+  .picker-backdrop {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.28);
+  }
+
+  .picker-sheet {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--bg); border-radius: 18px 18px 0 0;
+    max-height: 72vh; display: flex; flex-direction: column;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    animation: slideUp 0.22s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .picker-handle {
+    width: 36px; height: 4px; background: var(--border);
+    border-radius: 2px; margin: 10px auto 0; flex-shrink: 0;
+  }
+
+  .picker-search-wrap {
+    padding: 12px 16px; flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .picker-search {
+    width: 100%; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-size: 15px; font-family: inherit; outline: none;
+    background: var(--card); color: var(--ink); -webkit-appearance: none;
+  }
+  .picker-search:focus { border-color: #b8b0a5; }
+  .picker-search::placeholder { color: #c9c2b6; }
+
+  .picker-list { overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; }
+
+  .picker-item {
+    padding: 13px 16px; font-size: 15px; cursor: pointer;
+    border-bottom: 1px solid #F5F4F1; color: var(--ink);
+    transition: background 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .picker-item:last-child { border-bottom: none; }
+  .picker-item:active { background: #F2F0EB; }
+
+  .picker-add { color: var(--pull); font-weight: 500; }
+
+  .picker-empty { padding: 20px 16px; font-size: 14px; color: var(--muted); text-align: center; }
 </style>
 </head>
 <body>
 
-<!-- ═══ Login screen ════════════════════════════════ -->
+<!-- Loading overlay -->
+<div id="loading"><div class="spinner"></div></div>
+
+<!-- ═══ Login ════════════════════════════════════════ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">PPL Tracker</div>
     <div class="login-sub">Who's training today?</div>
     <div id="user-pills"></div>
     <div class="login-form">
-      <input id="login-username" class="login-input" type="text" placeholder="Username" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <input id="login-username" class="login-input" type="text" placeholder="Username"
+             autocomplete="off" autocapitalize="off" spellcheck="false">
       <input id="login-password" class="login-input" type="password" placeholder="Password (optional)">
       <button class="login-btn" id="login-btn">Let's go →</button>
     </div>
@@ -620,7 +431,7 @@
   </div>
 </div>
 
-<!-- ═══ App ═════════════════════════════════════════ -->
+<!-- ═══ App ══════════════════════════════════════════ -->
 <div id="app">
   <div id="header">
     <div class="header-row">
@@ -633,11 +444,19 @@
     </div>
   </div>
 
+  <div id="offline-bar" role="alert">
+    Changes not saved — check your connection.
+    <button id="retry-btn">Retry</button>
+  </div>
+
   <div id="calendar-view">
     <div class="month-nav">
       <button class="nav-btn" id="prev-month">‹</button>
       <span class="month-label" id="month-label"></span>
-      <button class="nav-btn" id="next-month">›</button>
+      <div class="month-nav-right">
+        <button class="today-btn" id="today-btn">Today</button>
+        <button class="nav-btn" id="next-month">›</button>
+      </div>
     </div>
     <div class="week-headers">
       <div class="week-header">Mo</div><div class="week-header">Tu</div>
@@ -667,11 +486,30 @@
       <div id="no-type-msg" class="no-type-msg" style="display:none">
         Select a workout type above to start logging.
       </div>
+      <div id="notes-section" style="display:none">
+        <div class="notes-label">Notes</div>
+        <textarea id="notes-input" class="notes-input"
+                  placeholder="How did the session feel? Any PRs or observations…"></textarea>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- ═══ Exercise picker sheet ════════════════════════ -->
+<div id="ex-picker">
+  <div class="picker-backdrop" id="picker-backdrop"></div>
+  <div class="picker-sheet">
+    <div class="picker-handle"></div>
+    <div class="picker-search-wrap">
+      <input id="picker-search" class="picker-search" type="search"
+             placeholder="Search exercises…" autocomplete="off" spellcheck="false">
+    </div>
+    <div id="picker-list" class="picker-list"></div>
+  </div>
+</div>
+
 <script>
+// ── Constants ──────────────────────────────────────
 const GH_USER  = "aldenongjingyi";
 const GH_REPO  = "ppl-tracker";
 const GH_TOKEN = ["gho", "_376xGcWqmmxRXuvdT7TlitybOxlwsL16m3uv"].join("");
@@ -693,15 +531,43 @@ const TYPES = [
 ];
 const TYPE_MAP = Object.fromEntries(TYPES.map(t => [t.key, t]));
 
+const EXERCISES = [
+  // Push – chest / shoulders / triceps
+  "Bench Press","Incline Bench Press","Decline Bench Press",
+  "Dumbbell Press","Incline Dumbbell Press","Dumbbell Flyes","Cable Flyes","Pec Deck",
+  "Overhead Press","Arnold Press","Seated Dumbbell Press","Push Press",
+  "Lateral Raises","Cable Lateral Raises","Front Raises",
+  "Tricep Pushdowns","Skull Crushers","Overhead Tricep Extension",
+  "Close-Grip Bench Press","Tricep Dips","Dips","Push-ups",
+  // Pull – back / biceps
+  "Pull-ups","Weighted Pull-ups","Chin-ups",
+  "Lat Pulldown","Cable Pulldown","Straight-Arm Pulldown",
+  "Barbell Row","Cable Row","Dumbbell Row","Machine Row","T-Bar Row","Chest-Supported Row",
+  "Face Pulls","Rear Delt Flyes","Cable Reverse Flyes",
+  "Bicep Curls","Barbell Curl","Hammer Curls","Preacher Curls",
+  "Machine Curls","Cable Curls","Incline Dumbbell Curls","Concentration Curls",
+  "Shrugs","Deadlift",
+  // Legs – quads / hamstrings / glutes / calves
+  "Squats","Front Squats","Goblet Squats","Sumo Squats","Box Squats",
+  "Leg Press","Hack Squat",
+  "Romanian Deadlift","Stiff-Leg Deadlift","Good Mornings","Sumo Deadlift",
+  "Leg Extensions","Leg Curls","Seated Leg Curls","Nordic Curls",
+  "Hip Thrust","Glute Bridge",
+  "Calf Raises","Seated Calf Raises","Donkey Calf Raises",
+  "Lunges","Bulgarian Split Squats","Step-ups","Walking Lunges","Reverse Lunges",
+];
+
 // ── State ──────────────────────────────────────────
 let fileSha      = null;
-// Full data: { users: { "alice": { password: "", days: { "YYYY-MM-DD": { type, exercises: [] } } } } }
 let fullData     = { users: {} };
-let currentUser  = null; // username string
+let currentUser  = null;
 let calYear, calMonth;
-let selectedDate = null; // "YYYY-MM-DD"
+let selectedDate = null;
 let saveTimer    = null;
 let statusTimer  = null;
+let saving       = false;   // Bug 3: in-flight flag
+let pendingSave  = false;   // Bug 3: queued flag
+let closingFromPop = false; // Bug 5: popstate guard
 
 // ── Helpers ────────────────────────────────────────
 function makeSet(weight="", reps="") {
@@ -712,10 +578,9 @@ function makeExercise(name="") {
   return { id: crypto.randomUUID(), name, sets: [makeSet()] };
 }
 
-// Migrate old flat format { name, weight, reps, sets(count) } → card format
 function migrateExercise(e) {
   if (!e) return makeExercise();
-  if (Array.isArray(e.sets)) return e; // already new format
+  if (Array.isArray(e.sets)) return e;
   const count = Math.max(parseInt(e.sets) || 1, 1);
   return {
     id: e.id || crypto.randomUUID(),
@@ -735,50 +600,49 @@ function todayStr() {
 
 function formatDateLabel(str) {
   const [y,m,d] = str.split("-").map(Number);
-  return new Date(y, m-1, d).toLocaleDateString("en-GB", {
-    weekday: "long", day: "numeric", month: "long"
-  });
+  return new Date(y,m-1,d).toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
 }
 
-function userData() {
-  return fullData.users[currentUser] || { password: "", days: {} };
-}
-
-function userDays() {
-  return userData().days || {};
-}
+function userData() { return fullData.users[currentUser] || { password:"", days:{} }; }
+function userDays() { return userData().days || {}; }
 
 // ── GitHub ─────────────────────────────────────────
 async function ghLoad() {
   try {
     const res = await fetch(API, { headers: HEADERS });
-    if (res.status === 404) { fullData = { users: {} }; return; }
+    if (res.status === 404) { fullData = { users:{} }; return; }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     fileSha = json.sha;
-    const parsed = JSON.parse(atob(json.content.replace(/\n/g, "")));
-    // Migrate old format (top-level pushA/pullA etc.)
-    fullData = parsed.users ? parsed : { users: {} };
+    const parsed = JSON.parse(atob(json.content.replace(/\n/g,"")));
+    fullData = parsed.users ? parsed : { users:{} };
   } catch(e) {
     console.error("Load:", e);
-    fullData = { users: {} };
+    fullData = { users:{} };
   }
 }
 
+// Bug 3 fix: queue saves, never overlap
 async function ghSave() {
+  if (saving) { pendingSave = true; return; }
+  saving = true; pendingSave = false;
   showStatus("saving");
   const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(fullData, null, 2))));
-  const body = { message: "Update workout data", content: encoded };
+  const body = { message:"Update workout data", content: encoded };
   if (fileSha) body.sha = fileSha;
   try {
-    const res = await fetch(API, { method: "PUT", headers: HEADERS, body: JSON.stringify(body) });
+    const res = await fetch(API,{method:"PUT",headers:HEADERS,body:JSON.stringify(body)});
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     fileSha = (await res.json()).content.sha;
     showStatus("saved");
+    document.getElementById("offline-bar").classList.remove("visible");
   } catch(e) {
     console.error("Save:", e);
     showStatus("error");
+    document.getElementById("offline-bar").classList.add("visible");
   }
+  saving = false;
+  if (pendingSave) { pendingSave = false; ghSave(); }
 }
 
 function scheduleSave() {
@@ -786,27 +650,90 @@ function scheduleSave() {
   saveTimer = setTimeout(ghSave, 700);
 }
 
-// ── Status ─────────────────────────────────────────
+// ── Status (Bug 4 fix: clearTimeout outside forEach) ─
 function showStatus(state) {
+  clearTimeout(statusTimer);
+  const text = state === "saving" ? "Saving…" : state === "saved" ? "Saved" : "Error";
   ["status","day-status"].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    clearTimeout(statusTimer);
-    el.textContent = state === "saving" ? "Saving…" : state === "saved" ? "Saved" : "Error";
+    el.textContent = text;
     el.classList.add("visible");
-    if (state !== "saving") {
-      statusTimer = setTimeout(() => el.classList.remove("visible"), 1200);
-    }
   });
+  if (state !== "saving") {
+    statusTimer = setTimeout(() => {
+      ["status","day-status"].forEach(id => document.getElementById(id)?.classList.remove("visible"));
+    }, 1200);
+  }
 }
+
+// ── Exercise picker ────────────────────────────────
+let pickerExercise  = null;
+let pickerNameInput = null;
+
+function openExPicker(exercise, nameInput) {
+  pickerExercise  = exercise;
+  pickerNameInput = nameInput;
+  document.getElementById("picker-search").value = "";
+  document.getElementById("ex-picker").classList.add("open");
+  renderPickerList("");
+  setTimeout(() => document.getElementById("picker-search").focus(), 80);
+}
+
+function closeExPicker() {
+  document.getElementById("ex-picker").classList.remove("open");
+  pickerExercise  = null;
+  pickerNameInput = null;
+}
+
+function renderPickerList(query) {
+  const list = document.getElementById("picker-list");
+  list.innerHTML = "";
+  const q = query.toLowerCase().trim();
+  const matches = q ? EXERCISES.filter(e => e.toLowerCase().includes(q)) : EXERCISES;
+
+  if (!matches.length && !q) return;
+
+  matches.forEach(name => {
+    const item = document.createElement("div");
+    item.className = "picker-item";
+    item.textContent = name;
+    item.addEventListener("click", () => selectExercise(name));
+    list.appendChild(item);
+  });
+
+  // "Add custom" — shown only when typed and not an exact match
+  const raw = document.getElementById("picker-search").value.trim();
+  if (raw && !EXERCISES.some(e => e.toLowerCase() === raw.toLowerCase())) {
+    const addItem = document.createElement("div");
+    addItem.className = "picker-item picker-add";
+    addItem.textContent = `+ Add "${raw}"`;
+    addItem.addEventListener("click", () => selectExercise(raw));
+    list.appendChild(addItem);
+  }
+
+  if (!list.children.length) {
+    const empty = document.createElement("div");
+    empty.className = "picker-empty";
+    empty.textContent = "No matches.";
+    list.appendChild(empty);
+  }
+}
+
+function selectExercise(name) {
+  if (pickerExercise) { pickerExercise.name = name; scheduleSave(); }
+  if (pickerNameInput) pickerNameInput.value = name;
+  closeExPicker();
+}
+
+document.getElementById("picker-search").addEventListener("input", e => renderPickerList(e.target.value));
+document.getElementById("picker-backdrop").addEventListener("click", closeExPicker);
 
 // ── Login ──────────────────────────────────────────
 function renderUserPills() {
   const container = document.getElementById("user-pills");
   container.innerHTML = "";
-  const names = Object.keys(fullData.users);
-  if (!names.length) return;
-  names.forEach(name => {
+  Object.keys(fullData.users).forEach(name => {
     const btn = document.createElement("button");
     btn.className = "user-pill-btn";
     btn.textContent = name;
@@ -825,22 +752,16 @@ function tryLogin() {
   const password = document.getElementById("login-password").value;
   const errEl    = document.getElementById("login-error");
   errEl.textContent = "";
-
   if (!username) { errEl.textContent = "Enter a username."; return; }
-
   const existing = fullData.users[username];
   if (existing) {
-    // Existing user: check password if one is set
     if (existing.password && existing.password !== password) {
-      errEl.textContent = "Wrong password.";
-      return;
+      errEl.textContent = "Wrong password."; return;
     }
   } else {
-    // New user: create account
-    fullData.users[username] = { password, days: {} };
+    fullData.users[username] = { password, days:{} };
     ghSave();
   }
-
   currentUser = username;
   localStorage.setItem("ppl_user", username);
   enterApp();
@@ -851,8 +772,7 @@ function enterApp() {
   document.getElementById("app").style.display = "block";
   document.getElementById("user-badge").textContent = currentUser;
   const now = new Date();
-  calYear  = now.getFullYear();
-  calMonth = now.getMonth();
+  calYear = now.getFullYear(); calMonth = now.getMonth();
   renderCalendar();
 }
 
@@ -861,6 +781,7 @@ function logout() {
   localStorage.removeItem("ppl_user");
   selectedDate = null;
   document.getElementById("day-view").classList.remove("open");
+  closeExPicker();
   document.getElementById("app").style.display = "none";
   document.getElementById("login-screen").style.display = "flex";
   document.getElementById("login-username").value = "";
@@ -879,18 +800,15 @@ function renderCalendar() {
   const days  = userDays();
   const today = todayStr();
 
-  // First day offset (Monday = 0)
   let dow = new Date(calYear, calMonth, 1).getDay();
   if (dow === 0) dow = 7;
   const offset = dow - 1;
-  const total  = new Date(calYear, calMonth + 1, 0).getDate();
+  const total  = new Date(calYear, calMonth+1, 0).getDate();
 
   grid.innerHTML = "";
 
   for (let i = 0; i < offset; i++) {
-    const e = document.createElement("div");
-    e.className = "cal-day empty";
-    grid.appendChild(e);
+    const e = document.createElement("div"); e.className = "cal-day empty"; grid.appendChild(e);
   }
 
   for (let d = 1; d <= total; d++) {
@@ -898,21 +816,18 @@ function renderCalendar() {
     const cell = document.createElement("div");
     cell.className = "cal-day";
     if (ds === today) cell.classList.add("today");
-
     const dayLog = days[ds];
     if (dayLog && dayLog.type) cell.classList.add("has-workout");
 
     const num = document.createElement("div");
-    num.className = "day-num";
-    num.textContent = d;
+    num.className = "day-num"; num.textContent = d;
     cell.appendChild(num);
 
     if (dayLog && dayLog.type && TYPE_MAP[dayLog.type]) {
       const t     = TYPE_MAP[dayLog.type];
       const badge = document.createElement("div");
       badge.className = "workout-badge";
-      badge.textContent = t.label;
-      badge.style.background = t.color;
+      badge.textContent = t.label; badge.style.background = t.color;
       cell.appendChild(badge);
     }
 
@@ -922,8 +837,10 @@ function renderCalendar() {
 }
 
 // ── Day view ───────────────────────────────────────
+// Bug 5 fix: push history state when opening day view
 function openDay(ds) {
   selectedDate = ds;
+  history.pushState({ ppl: "day", date: ds }, "");
   document.getElementById("day-date-label").textContent = formatDateLabel(ds);
   document.getElementById("day-view").classList.add("open");
   renderTypeSelector();
@@ -931,16 +848,29 @@ function openDay(ds) {
   updateCopyBar();
 }
 
+// Bug 5 fix: split close into "from UI" and "from popstate"
 function closeDay() {
   document.getElementById("day-view").classList.remove("open");
+  closeExPicker();
   selectedDate = null;
   renderCalendar();
+  if (!closingFromPop) history.back();
 }
+
+window.addEventListener("popstate", () => {
+  if (document.getElementById("day-view").classList.contains("open")) {
+    closingFromPop = true;
+    closeDay();
+    closingFromPop = false;
+  }
+});
 
 function getOrCreateDay(ds, type) {
   if (!fullData.users[currentUser].days) fullData.users[currentUser].days = {};
   if (!fullData.users[currentUser].days[ds]) {
-    fullData.users[currentUser].days[ds] = { type, exercises: [makeExercise(),makeExercise(),makeExercise()] };
+    fullData.users[currentUser].days[ds] = {
+      type, exercises: [makeExercise(), makeExercise(), makeExercise()]
+    };
   }
   return fullData.users[currentUser].days[ds];
 }
@@ -957,6 +887,15 @@ function renderTypeSelector() {
     pill.textContent = t.label;
     pill.addEventListener("click", () => {
       const day = userDays()[selectedDate];
+      if (cur === t.key) {
+        // Bug 2 fix: re-tap active pill → deselect (clear type)
+        if (day) day.type = null;
+        scheduleSave();
+        renderTypeSelector();
+        renderExercises();
+        updateCopyBar();
+        return;
+      }
       if (!day) {
         getOrCreateDay(selectedDate, t.key);
       } else {
@@ -980,10 +919,16 @@ function findPrevSession(beforeDate, type) {
     .sort().pop() || null;
 }
 
+// Bug 1 fix: two-tap confirm before overwriting existing exercises
+let copyConfirmPending = false;
+let copyConfirmTimer   = null;
+
 function updateCopyBar() {
   const dayLog = userDays()[selectedDate];
   const bar    = document.getElementById("copy-bar");
   const btn    = document.getElementById("copy-btn");
+  copyConfirmPending = false;
+  clearTimeout(copyConfirmTimer);
 
   if (!dayLog || !dayLog.type) { bar.style.display = "none"; return; }
 
@@ -991,26 +936,65 @@ function updateCopyBar() {
   if (!prev) { bar.style.display = "none"; return; }
 
   const [y,m,d] = prev.split("-").map(Number);
-  const label = new Date(y,m-1,d).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
-  btn.textContent = `↓ Copy from ${label}`;
+  const label   = new Date(y,m-1,d).toLocaleDateString("en-GB",{day:"numeric",month:"short"});
+  const baseText = `↓ Copy from ${label}`;
+  btn.textContent = baseText;
+  btn.className   = "copy-btn";
+
   btn.onclick = () => {
-    const src    = userDays()[prev];
-    const target = userDays()[selectedDate];
+    const target  = userDays()[selectedDate];
+    const hasData = target && (target.exercises || []).some(ex =>
+      ex.name || (ex.sets || []).some(s => s.weight || s.reps)
+    );
+
+    if (hasData && !copyConfirmPending) {
+      // First tap: ask for confirmation
+      copyConfirmPending = true;
+      btn.textContent = "Tap again to overwrite ↓";
+      btn.classList.add("confirm");
+      copyConfirmTimer = setTimeout(() => {
+        copyConfirmPending = false;
+        btn.textContent = baseText;
+        btn.classList.remove("confirm");
+      }, 3000);
+      return;
+    }
+
+    // Second tap (or no existing data): perform copy
+    clearTimeout(copyConfirmTimer);
+    copyConfirmPending = false;
+    btn.textContent = baseText;
+    btn.classList.remove("confirm");
+
+    const src = userDays()[prev];
     if (!src || !target) return;
-    // Deep-clone exercises including sets and their drop segments
     target.exercises = src.exercises.map(e => ({
       ...e,
       id: crypto.randomUUID(),
       sets: (e.sets || []).map(s => ({
         ...s,
         id: crypto.randomUUID(),
-        drops: (s.drops || []).map(d => ({ ...d, id: crypto.randomUUID() }))
+        drops: (s.drops || []).map(dp => ({ ...dp, id: crypto.randomUUID() }))
       }))
     }));
     renderExercises();
     scheduleSave();
   };
+
   bar.style.display = "block";
+}
+
+function renderNotes() {
+  const dayLog  = userDays()[selectedDate];
+  const section = document.getElementById("notes-section");
+  const input   = document.getElementById("notes-input");
+  if (!dayLog || !dayLog.type) { section.style.display = "none"; return; }
+  section.style.display = "block";
+  input.value = dayLog.notes || "";
+  input.oninput = e => {
+    const dl = userDays()[selectedDate];
+    if (dl) { dl.notes = e.target.value; scheduleSave(); }
+  };
 }
 
 function renderExercises() {
@@ -1022,6 +1006,7 @@ function renderExercises() {
   if (!dayLog || !dayLog.type) {
     section.style.display = "none";
     noType.style.display  = "block";
+    renderNotes();
     return;
   }
 
@@ -1029,12 +1014,12 @@ function renderExercises() {
   noType.style.display  = "none";
   container.innerHTML   = "";
 
-  // Migrate any old-format exercises in place
   if (dayLog.exercises) {
     dayLog.exercises = dayLog.exercises.map(migrateExercise);
   }
 
   (dayLog.exercises || []).forEach(ex => container.appendChild(buildExerciseCard(ex)));
+  renderNotes();
 }
 
 function buildExerciseCard(exercise) {
@@ -1052,6 +1037,12 @@ function buildExerciseCard(exercise) {
   nameInput.value = exercise.name || "";
   nameInput.addEventListener("input", e => { exercise.name = e.target.value; scheduleSave(); });
 
+  const pickBtn = document.createElement("button");
+  pickBtn.className = "ex-pick-btn";
+  pickBtn.title = "Browse exercises";
+  pickBtn.textContent = "≡";
+  pickBtn.addEventListener("click", () => openExPicker(exercise, nameInput));
+
   const delEx = document.createElement("button");
   delEx.className = "del-ex-btn";
   delEx.textContent = "✕";
@@ -1063,13 +1054,14 @@ function buildExerciseCard(exercise) {
   });
 
   nameRow.appendChild(nameInput);
+  nameRow.appendChild(pickBtn);
   nameRow.appendChild(delEx);
   card.appendChild(nameRow);
 
   // ── Set column headers ──
   const headers = document.createElement("div");
   headers.className = "set-col-headers";
-  ["#", "kg", "reps", "", ""].forEach(h => {
+  ["#","kg","reps","",""].forEach(h => {
     const span = document.createElement("span");
     span.className = "set-col-header";
     span.textContent = h;
@@ -1092,13 +1084,11 @@ function buildExerciseCard(exercise) {
   function renderSets() {
     setsEl.innerHTML = "";
     (exercise.sets || []).forEach((s, idx) => {
-      // ── Main set row ──
       const row = document.createElement("div");
       row.className = "set-row";
 
       const num = document.createElement("span");
-      num.className = "set-num";
-      num.textContent = idx + 1;
+      num.className = "set-num"; num.textContent = idx + 1;
 
       const dropBtn = document.createElement("button");
       dropBtn.className = "drop-btn";
@@ -1107,17 +1097,14 @@ function buildExerciseCard(exercise) {
       dropBtn.addEventListener("click", () => {
         if (!s.drops) s.drops = [];
         s.drops.push(makeSet());
-        renderSets();
-        scheduleSave();
+        renderSets(); scheduleSave();
       });
 
       const delSet = document.createElement("button");
-      delSet.className = "del-set-btn";
-      delSet.textContent = "✕";
+      delSet.className = "del-set-btn"; delSet.textContent = "✕";
       delSet.addEventListener("click", () => {
         exercise.sets = exercise.sets.filter(x => x.id !== s.id);
-        renderSets();
-        scheduleSave();
+        renderSets(); scheduleSave();
       });
 
       row.appendChild(num);
@@ -1127,7 +1114,6 @@ function buildExerciseCard(exercise) {
       row.appendChild(delSet);
       setsEl.appendChild(row);
 
-      // ── Drop segments ──
       if (s.drops && s.drops.length) {
         const wrap = document.createElement("div");
         wrap.className = "drops-wrap";
@@ -1136,16 +1122,13 @@ function buildExerciseCard(exercise) {
           dRow.className = "drop-row";
 
           const arrow = document.createElement("span");
-          arrow.className = "drop-arrow";
-          arrow.textContent = "→";
+          arrow.className = "drop-arrow"; arrow.textContent = "→";
 
           const delDrop = document.createElement("button");
-          delDrop.className = "del-set-btn";
-          delDrop.textContent = "✕";
+          delDrop.className = "del-set-btn"; delDrop.textContent = "✕";
           delDrop.addEventListener("click", () => {
-            s.drops = s.drops.filter(d => d.id !== drop.id);
-            renderSets();
-            scheduleSave();
+            s.drops = s.drops.filter(dp => dp.id !== drop.id);
+            renderSets(); scheduleSave();
           });
 
           dRow.appendChild(arrow);
@@ -1163,15 +1146,13 @@ function buildExerciseCard(exercise) {
   renderSets();
   card.appendChild(setsEl);
 
-  // ── Add set ──
   const addSetBtn = document.createElement("button");
   addSetBtn.className = "add-set-btn";
   addSetBtn.textContent = "+ add set";
   addSetBtn.addEventListener("click", () => {
     const last = exercise.sets[exercise.sets.length - 1];
     exercise.sets.push(makeSet(last ? last.weight : "", ""));
-    renderSets();
-    scheduleSave();
+    renderSets(); scheduleSave();
   });
   card.appendChild(addSetBtn);
 
@@ -1180,22 +1161,29 @@ function buildExerciseCard(exercise) {
 
 // ── Wire-up ────────────────────────────────────────
 document.getElementById("login-btn").addEventListener("click", tryLogin);
-["login-username","login-password"].forEach(id => {
-  document.getElementById(id).addEventListener("keydown", e => {
-    if (e.key === "Enter") tryLogin();
-  });
-});
+["login-username","login-password"].forEach(id =>
+  document.getElementById(id).addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); })
+);
 
 document.getElementById("logout-btn").addEventListener("click", logout);
 document.getElementById("back-btn").addEventListener("click", closeDay);
 
 document.getElementById("prev-month").addEventListener("click", () => {
-  if (--calMonth < 0) { calMonth = 11; calYear--; }
-  renderCalendar();
+  if (--calMonth < 0) { calMonth = 11; calYear--; } renderCalendar();
 });
 document.getElementById("next-month").addEventListener("click", () => {
-  if (++calMonth > 11) { calMonth = 0; calYear++; }
+  if (++calMonth > 11) { calMonth = 0; calYear++; } renderCalendar();
+});
+
+document.getElementById("today-btn").addEventListener("click", () => {
+  const now = new Date();
+  calYear = now.getFullYear(); calMonth = now.getMonth();
   renderCalendar();
+});
+
+document.getElementById("retry-btn").addEventListener("click", () => {
+  document.getElementById("offline-bar").classList.remove("visible");
+  ghSave();
 });
 
 document.getElementById("add-row-btn").addEventListener("click", () => {
@@ -1208,20 +1196,19 @@ document.getElementById("add-row-btn").addEventListener("click", () => {
   scheduleSave();
 });
 
-// Swipe down to close day view (when scrolled to top)
+// Swipe-down to close day view
 let touchY0 = 0;
 const dayView = document.getElementById("day-view");
 dayView.addEventListener("touchstart", e => { touchY0 = e.touches[0].clientY; }, { passive: true });
-dayView.addEventListener("touchend",   e => {
+dayView.addEventListener("touchend", e => {
   if (dayView.scrollTop === 0 && e.changedTouches[0].clientY - touchY0 > 60) closeDay();
 }, { passive: true });
 
 // ── Init ───────────────────────────────────────────
 (async () => {
   await ghLoad();
+  document.getElementById("loading").style.display = "none";
   renderUserPills();
-
-  // Auto-login if user is stored
   const saved = localStorage.getItem("ppl_user");
   if (saved && fullData.users[saved]) {
     currentUser = saved;
